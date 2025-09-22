@@ -1,0 +1,6 @@
+@import "tailwindcss/preflight";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* This file is intentionally minimal — shadcn CLI expects a tailwind CSS entry file.
+   The project's main CSS remains in app/globals.css. */

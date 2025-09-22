@@ -1,11 +1,56 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Consolidated global styles for the project.
+  This file contains Tailwind v4 imports, shadcn design tokens, and app-specific helpers
+  so Tailwind builds from a single source of truth.
+*/
 
 :root {
+  --radius: 0.625rem;
+
+  /* primary tokens */
   --background: #ffffff;
   --foreground: #171717;
   --accent: #b32dff;
   --bg-dark: #060608;
   --glass-bg: rgba(255, 255, 255, 0.04);
+
+  /* shadcn/theme tokens (fallbacks) */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+
+  /* convenience aliases for shadcn components */
+  --color-accent: var(--accent);
+  --bg-gradient: linear-gradient(135deg, rgba(179, 45, 255, 0.12), rgba(0, 0, 0, 0));
 }
 
 @media (prefers-color-scheme: dark) {
@@ -15,18 +60,40 @@
   }
 }
 
+.dark {
+  /* dark mode shadcn token overrides */
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-}
-
-/* Dark theme overrides for app */
-@media (prefers-color-scheme: dark) {
-  body {
-    background: var(--bg-dark);
-    color: var(--foreground);
-  }
 }
 
 /* Small helper utilities (glassmorphism) */
@@ -39,4 +106,64 @@ body {
 
 .accent {
   color: var(--accent);
+}
+
+/* stronger glass variants and borders used by Hero/Features */
+.glass-strong {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.06));
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  backdrop-filter: blur(10px) saturate(120%);
+  border-radius: var(--radius);
+}
+
+.glass-faint {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.04));
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.glass-border {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.02), rgba(179, 45, 255, 0.06) 50%, rgba(255, 255, 255, 0.02));
+  mix-blend-mode: overlay;
+}
+
+/* accent glow animation (subtle) */
+@keyframes accentGlow {
+  0% {
+    transform: translateX(-10%) scale(1);
+    opacity: 0.08
+  }
+
+  50% {
+    transform: translateX(10%) scale(1.02);
+    opacity: 0.18
+  }
+
+  100% {
+    transform: translateX(-10%) scale(1);
+    opacity: 0.08
+  }
+}
+
+.animate-accentGlow {
+  background: linear-gradient(90deg, rgba(179, 45, 255, 0.06), rgba(179, 45, 255, 0.12), rgba(179, 45, 255, 0.06));
+  animation: accentGlow 4.5s ease-in-out infinite;
+  filter: blur(12px);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-accentGlow {
+    animation: none;
+    opacity: 0.14;
+  }
+}
+
+/* base fallback: apply sensible defaults without @apply to avoid compatibility issues */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
 }

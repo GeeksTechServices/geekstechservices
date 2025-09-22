@@ -1,37 +1,42 @@
+"use client";
 import React from "react";
-import { motion, type Variants } from "framer-motion";
+import { motion, type Variants, useReducedMotion } from "framer-motion";
 import Link from "next/link";
-
-const accent = "#b32dff";
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
 
 const container = {
   hidden: { opacity: 0, y: 24 },
-  show: {
+  show: (shouldReduce: boolean) => ({
     opacity: 1,
     y: 0,
     transition: {
-      staggerChildren: 0.08,
+      staggerChildren: shouldReduce ? 0 : 0.08,
       when: "beforeChildren",
     },
-  },
-} as Variants;
+  }),
+} as unknown as Variants;
 
 const item = {
   hidden: { opacity: 0, y: 8 },
-  show: {
+  show: (shouldReduce: boolean) => ({
     opacity: 1,
     y: 0,
-    transition: { type: "spring", stiffness: 120, damping: 14 },
-  },
-} as Variants;
+    transition: shouldReduce
+      ? { duration: 0.25 }
+      : { type: "spring", stiffness: 120, damping: 14 },
+  }),
+} as unknown as Variants;
 
 export default function Hero() {
+  const shouldReduce = useReducedMotion();
   return (
     <section className='w-full max-w-6xl mx-auto px-4 sm:px-6'>
       <motion.div
         variants={container}
         initial='hidden'
         animate='show'
+        custom={shouldReduce}
         className='relative overflow-hidden rounded-2xl'
       >
         {/* Background gradient + subtle shapes */}
@@ -43,6 +48,7 @@ export default function Hero() {
         <div className='flex flex-col-reverse md:flex-row items-center gap-10 py-16 md:py-28'>
           <motion.div
             variants={item}
+            custom={shouldReduce}
             className='flex-1 text-center md:text-left'
           >
             <h1 className='text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight text-white'>
@@ -57,18 +63,13 @@ export default function Hero() {
 
             <div className='mt-8 flex flex-col sm:flex-row gap-3 items-center justify-center md:justify-start'>
               <Link href='#' className='w-full sm:w-auto'>
-                <a
-                  className='inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 bg-[var(--accent)] text-black font-semibold shadow-lg hover:brightness-95 transition'
-                  style={{ backgroundColor: accent }}
-                >
-                  Get started
-                </a>
+                <Button className='w-full sm:w-auto'>Get started</Button>
               </Link>
 
               <Link href='#' className='w-full sm:w-auto'>
-                <a className='inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 bg-white/6 border border-white/10 text-white hover:bg-white/8 transition'>
+                <Button variant='ghost' className='w-full sm:w-auto'>
                   Request demo
-                </a>
+                </Button>
               </Link>
             </div>
 
@@ -80,51 +81,72 @@ export default function Hero() {
           {/* Visual: glass card with IoT Network Health score and animated dots */}
           <motion.div
             variants={item}
+            custom={shouldReduce}
             className='flex-1 max-w-md w-full relative'
             aria-hidden
+            whileHover={shouldReduce ? undefined : { y: -6, scale: 1.01 }}
+            whileTap={shouldReduce ? undefined : { scale: 0.995 }}
           >
             <div className='relative'>
-              <div className='backdrop-blur-[8px] bg-white/4 dark:bg-black/20 border border-white/6 rounded-2xl p-6 shadow-[0_10px_30px_rgba(0,0,0,0.6)]'>
-                <div className='flex items-center justify-between'>
-                  <div>
-                    <div className='text-sm text-gray-300'>
-                      IoT Network Health
-                    </div>
-                    <div className='mt-2 flex items-end gap-3'>
-                      <div className='text-5xl font-extrabold text-white'>
-                        92
+              <Card className='glass glass-strong rounded-2xl p-6 shadow-[0_10px_30px_rgba(0,0,0,0.6)] relative overflow-hidden'>
+                {/* subtle border gradient */}
+                <div
+                  className='absolute inset-0 rounded-2xl pointer-events-none glass-border'
+                  aria-hidden
+                />
+                {/* animated accent overlay */}
+                <div
+                  className='absolute -inset-1 pointer-events-none opacity-30 animate-accentGlow'
+                  aria-hidden
+                />
+                <CardHeader className='p-0'>
+                  <div className='flex items-center justify-between w-full'>
+                    <div>
+                      <div className='text-sm text-gray-300'>
+                        IoT Network Health
                       </div>
-                      <div className='text-sm text-gray-400'>/100</div>
+                      <div className='mt-2 flex items-end gap-3'>
+                        <div className='text-5xl font-extrabold text-white'>
+                          92
+                        </div>
+                        <div className='text-sm text-gray-400'>/100</div>
+                      </div>
+                      <div className='mt-3 text-xs text-gray-400'>
+                        Stable — 3 devices need attention
+                      </div>
                     </div>
-                    <div className='mt-3 text-xs text-gray-400'>
-                      Stable — 3 devices need attention
+
+                    <div className='flex flex-col items-end'>
+                      <div className='text-xs text-gray-400'>Last checked</div>
+                      <div className='text-sm text-gray-200'>2m ago</div>
                     </div>
                   </div>
+                </CardHeader>
 
-                  <div className='flex flex-col items-end'>
-                    <div className='text-xs text-gray-400'>Last checked</div>
-                    <div className='text-sm text-gray-200'>2m ago</div>
+                <CardContent className='p-0 mt-4'>
+                  <div className='mt-6 grid grid-cols-3 gap-2'>
+                    {Array.from({ length: 6 }).map((_, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, y: 6, scale: 0.96 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={{
+                          delay: shouldReduce ? 0 : 0.12 + i * 0.04,
+                          type: shouldReduce ? undefined : "spring",
+                          stiffness: shouldReduce ? undefined : 110,
+                          damping: shouldReduce ? undefined : 12,
+                        }}
+                        whileHover={
+                          shouldReduce ? undefined : { y: -4, scale: 1.02 }
+                        }
+                        className='h-12 rounded-lg glass-faint flex items-center justify-center text-xs text-gray-200'
+                      >
+                        Device {i + 1}
+                      </motion.div>
+                    ))}
                   </div>
-                </div>
-
-                <div className='mt-6 grid grid-cols-3 gap-2'>
-                  {Array.from({ length: 6 }).map((_, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, y: 6, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      transition={{
-                        delay: 0.12 + i * 0.04,
-                        type: "spring",
-                        stiffness: 110,
-                      }}
-                      className='h-12 rounded-lg bg-gradient-to-b from-white/4 to-white/2 flex items-center justify-center text-xs text-gray-200'
-                    >
-                      Device {i + 1}
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
+                </CardContent>
+              </Card>
 
               {/* Accent floating glow */}
               <div

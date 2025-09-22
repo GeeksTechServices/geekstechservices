@@ -51,3 +51,19 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Notes about Tailwind & local UI primitives
+
+- Tailwind v4 is configured in `tailwind.config.cjs` and PostCSS via `postcss.config.cjs`.
+- If you want to run a separate Tailwind watcher (not required with Next's PostCSS integration), use:
+
+```powershell
+npm run dev:tailwind
+```
+
+- I added a tiny set of UI primitives under `app/components/ui` to mimic a shadcn structure:
+  - `Button.tsx` — simple solid/ghost variants
+  - `Card.tsx` — glass-style card wrapper
+  - `Header.tsx` — top navigation header
+
+These are intentionally minimal. If you want, I can integrate the official `@shadcn/ui` package and run its generator to create more components and styles.
