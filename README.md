@@ -16,6 +16,23 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Development notes
+
+Recommended dependencies to install (project already has most declared in package.json):
+
+- tailwindcss@4
+- framer-motion
+- @shadcn/ui (optional, for shadcn components)
+
+Install and run (Windows PowerShell):
+
+```powershell
+npm install
+npm run dev
+```
+
+If you add shadcn components follow their setup instructions. Tailwind should already be configured in this project (check `tailwind.config` if present).
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
