@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Unified IoT Health Score",
+    "description": "A single, easy-to-read score that shows device connectivity, latency, and health across your entire fleet.",
+    "icon": "MdTimeline"
+  },
+  {
+    "title": "AI-driven Recommendations",
+    "description": "Actionable, prioritized remediation steps and alerts powered by machine learning.",
+    "icon": "MdAutoFixHigh"
+  },
+  {
+    "title": "Role-based Dashboards",
+    "description": "Tailored dashboards for operators, managers, and executives with deep drilldowns.",
+    "icon": "MdDashboard"
+  },
+  {
+    "title": "Seamless Integrations",
+    "description": "Prebuilt connectors and APIs to plug into your observability and IT tooling stack.",
+    "icon": "MdSyncAlt"
+  }
+]

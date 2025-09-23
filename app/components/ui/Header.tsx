@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
@@ -12,12 +13,25 @@ export default function Header() {
       </div>
 
       <div className='flex items-center gap-3'>
-        <nav className='hidden sm:flex gap-6 text-sm text-gray-200'>
-          <a href='#'>Home</a>
-          <a href='#features'>Features</a>
-          <a href='#pricing'>Pricing</a>
-          <a href='#blog'>Blog</a>
-          <a href='#contact'>Contact</a>
+        <nav
+          className='hidden sm:flex gap-6 text-sm text-gray-200'
+          aria-label='Main navigation'
+        >
+          <Link href='#' className='hover:underline'>
+            Home
+          </Link>
+          <Link href='#features' className='hover:underline'>
+            Features
+          </Link>
+          <Link href='#pricing' className='hover:underline'>
+            Pricing
+          </Link>
+          <Link href='#blog' className='hover:underline'>
+            Blog
+          </Link>
+          <Link href='#contact' className='hover:underline'>
+            Contact
+          </Link>
         </nav>
 
         <Button variant='ghost' className='hidden sm:inline-flex'>

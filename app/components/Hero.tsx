@@ -31,7 +31,7 @@ const item = {
 export default function Hero() {
   const shouldReduce = useReducedMotion();
   return (
-    <section className='w-full max-w-6xl mx-auto px-4 sm:px-6'>
+    <section className='w-full max-w-6xl mx-auto px-4 sm:px-6 my-24 md:my-32'>
       <motion.div
         variants={container}
         initial='hidden'

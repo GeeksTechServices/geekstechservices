@@ -1,0 +1,26 @@
+[
+  {
+    "id": "faq-1",
+    "category": "product",
+    "tags": ["health-score", "metric"],
+    "question": "What is IoT Network Health?",
+    "answer": "IoT Network Health is a single metric that summarizes connectivity, latency, and device reliability across your fleet. It combines telemetry, anomaly detection, and historical trends into an easy-to-understand score.",
+    "updatedAt": "2025-09-22"
+  },
+  {
+    "id": "faq-2",
+    "category": "ai",
+    "tags": ["recommendations", "ai"],
+    "question": "How does AI-driven recommendations work?",
+    "answer": "Our AI analyzes telemetry and logs to surface the most likely root causes and suggests step-by-step remediation. Recommendations can be applied automatically or reviewed by operators.",
+    "updatedAt": "2025-09-22"
+  },
+  {
+    "id": "faq-3",
+    "category": "integration",
+    "tags": ["api", "connectors"],
+    "question": "Can I integrate with existing dashboards?",
+    "answer": "Yes — GeekStechServices supports webhooks, MQTT, REST APIs, and has prebuilt integrations with popular monitoring tools. Contact our team for enterprise connectors.",
+    "updatedAt": "2025-09-22"
+  }
+]

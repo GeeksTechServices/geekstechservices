@@ -1,0 +1,37 @@
+[
+  {
+    "quote": "GeekStechServices reduced our device downtime by 72% — the unified health score and AI recommendations are game changers.",
+    "name": "Aisha Rahman",
+    "role": "Head of IoT Operations, NovaFactory",
+    "avatar": "/file.svg",
+    "rating": 5
+  },
+  {
+    "quote": "Real-time alerts and role-based dashboards made it trivial to prioritize issues across locations.",
+    "name": "Carlos M.",
+    "role": "Site Reliability Engineer, SmartHQ",
+    "avatar": "/file.svg",
+    "rating": 4
+  },
+  {
+    "quote": "Simple to integrate and the analytics are actionable. Helped us avoid costly outages.",
+    "name": "Priya Singh",
+    "role": "IT Manager, Acme Logistics",
+    "avatar": "/file.svg",
+    "rating": 5
+  },
+  {
+    "quote": "The unified dashboard gave us real-time visibility across 120+ sites — resolution time dropped dramatically.",
+    "name": "Liam O'Connor",
+    "role": "Director of Field Ops, GridWorks",
+    "avatar": "/file.svg",
+    "rating": 5
+  },
+  {
+    "quote": "Integration was seamless; the API-first approach let us plug into our existing workflows in days, not weeks.",
+    "name": "Mei Tan",
+    "role": "Senior Engineer, BlueLine Systems",
+    "avatar": "/file.svg",
+    "rating": 4
+  }
+]
