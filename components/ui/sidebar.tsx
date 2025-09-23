@@ -329,11 +329,16 @@ const SidebarInset = React.forwardRef<
   React.ComponentProps<"main">
 >(({ className, ...props }, ref) => {
   return (
-    <main
+    <div
       ref={ref}
+      data-sidebar="inset"
       className={cn(
-        "relative flex w-full flex-1 flex-col bg-background",
-        "md:peer-data-[variant=inset]:m-2 md:peer-data-[state=collapsed]:peer-data-[variant=inset]:ml-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow",
+        "relative w-[--sidebar-width] bg-transparent transition-[width] duration-200 ease-linear",
+        "group-data-[collapsible=offcanvas]:w-0",
+        "group-data-[side=right]:rotate-180",
+        // Keep a simple, stable inset placeholder here. Variant-specific logic
+        // is handled by the parent `Sidebar` component so we avoid referencing
+        // variables that aren't in this scope.
         className
       )}
       {...props}
@@ -515,7 +520,12 @@ const SidebarMenuItem = React.forwardRef<
   <li
     ref={ref}
     data-sidebar="menu-item"
-    className={cn("group/menu-item relative", className)}
+    className={cn(
+      "relative flex w-full min-w-0 items-center",
+      // Allow consumers to apply additional classes; preserve faint glass style
+      "group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow glass-faint",
+      className
+    )}
     {...props}
   />
 ))
