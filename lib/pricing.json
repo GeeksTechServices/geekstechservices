@@ -1,0 +1,274 @@
+{
+  "currency": "USD",
+  "last_updated": "2025-09-23",
+  "plans": [
+    {
+      "id": "basic",
+      "slug": "basic",
+      "name": "Basic",
+      "short_description": "Pilot and small teams - essential telemetry and alerts.",
+      "price_monthly": 49,
+      "price_yearly": 470,
+      "billing_hint": "Monthly or yearly (20% off)",
+      "trial_days": 14,
+      "included_devices": 100,
+      "included_gateways": 5,
+      "included_users": 3,
+      "overage_per_device_month": 0.1,
+      "per_device_ingest_per_minute": 1000,
+      "max_ingest_events_per_minute": 1000,
+      "data_retention_days": 30,
+      "analytics_retention_days": 30,
+      "storage_gb_included": 10,
+      "extra_storage_gb_price_month": 0.25,
+      "api_rate_limit_per_minute": 60,
+      "webhook_calls_per_month": 1000,
+      "alerts_per_month": 1000,
+      "max_reports_per_month": 5,
+      "export_formats": ["csv", "pdf"],
+      "predictive_maintenance": false,
+      "ai_health_score": true,
+      "realtime_alerts": true,
+      "historical_analytics": true,
+      "custom_metrics_limit": 5,
+      "predictive_model_slots": 0,
+      "predictive_model_runs_per_month": 0,
+      "integrations_included": ["webhooks", "basic-cloud-storage"],
+      "sso": false,
+      "audit_logs_days": 30,
+      "onboarding_hours_included": 0,
+      "migration_hours_included": 0,
+      "support_tier": "community",
+      "support_response_time_hours": 72,
+      "sla": false,
+      "contract_required": false,
+      "min_commit_months": 0,
+      "recommended": false
+    },
+    {
+      "id": "pro",
+      "slug": "pro",
+      "name": "Pro",
+      "short_description": "Full-featured plan for production teams with advanced analytics and predictive insights.",
+      "price_monthly": 199,
+      "price_yearly": 2030,
+      "billing_hint": "Monthly or yearly (15% off)",
+      "trial_days": 14,
+      "included_devices": 5000,
+      "included_gateways": 50,
+      "included_users": 10,
+      "overage_per_device_month": 0.05,
+      "per_device_ingest_per_minute": 20000,
+      "max_ingest_events_per_minute": 50000,
+      "data_retention_days": 365,
+      "analytics_retention_days": 365,
+      "storage_gb_included": 100,
+      "extra_storage_gb_price_month": 0.15,
+      "api_rate_limit_per_minute": 600,
+      "webhook_calls_per_month": 50000,
+      "alerts_per_month": 10000,
+      "max_reports_per_month": 500,
+      "export_formats": ["csv", "pdf", "excel"],
+      "predictive_maintenance": true,
+      "ai_health_score": true,
+      "realtime_alerts": true,
+      "historical_analytics": true,
+      "custom_metrics_limit": 50,
+      "predictive_model_slots": 5,
+      "predictive_model_runs_per_month": 2000,
+      "integrations_included": [
+        "webhooks",
+        "s3",
+        "azure-blob",
+        "slack",
+        "pagerduty"
+      ],
+      "sso": true,
+      "audit_logs_days": 365,
+      "onboarding_hours_included": 8,
+      "migration_hours_included": 10,
+      "support_tier": "business",
+      "support_response_time_hours": 8,
+      "sla": false,
+      "contract_required": false,
+      "min_commit_months": 0,
+      "recommended": true
+    },
+    {
+      "id": "enterprise",
+      "slug": "enterprise",
+      "name": "Enterprise",
+      "short_description": "Custom, SLA-backed plan for mission-critical fleets and large-scale deployments.",
+      "price_monthly": null,
+      "price_yearly": null,
+      "billing_hint": "Contact sales for custom pricing",
+      "trial_days": 30,
+      "included_devices": null,
+      "included_gateways": null,
+      "included_users": null,
+      "overage_per_device_month": null,
+      "per_device_ingest_per_minute": 1000000,
+      "max_ingest_events_per_minute": 1000000,
+      "data_retention_days": 3650,
+      "analytics_retention_days": 3650,
+      "storage_gb_included": 2000,
+      "extra_storage_gb_price_month": 0.1,
+      "api_rate_limit_per_minute": 5000,
+      "webhook_calls_per_month": -1,
+      "alerts_per_month": -1,
+      "max_reports_per_month": -1,
+      "export_formats": ["csv", "pdf", "excel", "json", "parquet"],
+      "predictive_maintenance": true,
+      "ai_health_score": true,
+      "realtime_alerts": true,
+      "historical_analytics": true,
+      "custom_metrics_limit": 500,
+      "predictive_model_slots": 50,
+      "predictive_model_runs_per_month": 100000,
+      "integrations_included": [
+        "webhooks",
+        "s3",
+        "azure-blob",
+        "splunk",
+        "datadog",
+        "pagerduty",
+        "service-now"
+      ],
+      "sso": true,
+      "audit_logs_days": 3650,
+      "onboarding_hours_included": 40,
+      "migration_hours_included": 80,
+      "support_tier": "enterprise",
+      "support_response_time_hours": 1,
+      "sla": true,
+      "sla_uptime_percent": 99.95,
+      "dedicated_account_manager": true,
+      "private_networking": true,
+      "on_premise_option": true,
+      "contract_required": true,
+      "min_commit_months": 12,
+      "recommended": false
+    }
+  ],
+  "feature_definitions": [
+    {
+      "key": "ai_health_score",
+      "label": "AI Health Score",
+      "type": "boolean",
+      "description": "ML-driven fleet and device health scoring."
+    },
+    {
+      "key": "realtime_alerts",
+      "label": "Real-time Alerts",
+      "type": "boolean",
+      "description": "Instant alerts by channel (email, slack, pagerduty)."
+    },
+    {
+      "key": "predictive_maintenance",
+      "label": "Predictive Maintenance",
+      "type": "boolean",
+      "description": "Scheduled model-driven maintenance insights."
+    },
+    {
+      "key": "historical_analytics",
+      "label": "Historical Analytics",
+      "type": "boolean",
+      "description": "Time series analytics and dashboards."
+    },
+    {
+      "key": "custom_metrics_limit",
+      "label": "Custom Metrics",
+      "type": "number",
+      "description": "Number of custom metric series allowed."
+    },
+    {
+      "key": "included_devices",
+      "label": "Included Devices",
+      "type": "number",
+      "description": "Device count included in monthly plan."
+    },
+    {
+      "key": "extra_storage_gb_price_month",
+      "label": "Extra Storage Price (GB/mo)",
+      "type": "number",
+      "description": "Price per extra GB per month."
+    }
+  ],
+  "comparison_matrix": [
+    {
+      "label": "AI Health Score",
+      "key": "ai_health_score",
+      "basic": true,
+      "pro": true,
+      "enterprise": true
+    },
+    {
+      "label": "Real-time Alerts",
+      "key": "realtime_alerts",
+      "basic": true,
+      "pro": true,
+      "enterprise": true
+    },
+    {
+      "label": "Predictive Maintenance",
+      "key": "predictive_maintenance",
+      "basic": false,
+      "pro": true,
+      "enterprise": true
+    },
+    {
+      "label": "Included Devices",
+      "key": "included_devices",
+      "basic": 100,
+      "pro": 5000,
+      "enterprise": "Custom / Unlimited"
+    },
+    {
+      "label": "Data retention (days)",
+      "key": "data_retention_days",
+      "basic": 30,
+      "pro": 365,
+      "enterprise": 3650
+    },
+    {
+      "label": "Storage included (GB)",
+      "key": "storage_gb_included",
+      "basic": 10,
+      "pro": 100,
+      "enterprise": 2000
+    },
+    {
+      "label": "API rate limit (rpm)",
+      "key": "api_rate_limit_per_minute",
+      "basic": 60,
+      "pro": 600,
+      "enterprise": 5000
+    },
+    {
+      "label": "Predictive model slots",
+      "key": "predictive_model_slots",
+      "basic": 0,
+      "pro": 5,
+      "enterprise": 50
+    },
+    {
+      "label": "Support tier",
+      "key": "support_tier",
+      "basic": "community",
+      "pro": "business",
+      "enterprise": "enterprise"
+    },
+    {
+      "label": "SLA",
+      "key": "sla",
+      "basic": false,
+      "pro": false,
+      "enterprise": true
+    }
+  ],
+  "notes": {
+    "-1": "represents unlimited / unbounded for Enterprise fields where applicable",
+    "currency_note": "All prices are shown in USD. Taxes and third-party fees may apply.",
+    "usage_examples": "Use `included_devices` + `overage_per_device_month` to compute monthly device costs for out-of-plan devices. Use `price_yearly` for the effective yearly cost when present."
+  }
+}

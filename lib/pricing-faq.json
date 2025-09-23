@@ -1,0 +1,30 @@
+[
+  {
+    "q": "Do you offer a free trial?",
+    "a": "Yes — we offer a 14-day trial for the Pro plan with no credit card required. For Enterprise pilots, contact sales to arrange an extended evaluation."
+  },
+  {
+    "q": "What happens if I go over my included devices?",
+    "a": "Each plan lists included devices; overage is billed per device per month at the plan's overage rate. Use our usage estimator in the dashboard to forecast costs before upgrading."
+  },
+  {
+    "q": "How does yearly billing work and how much can I save?",
+    "a": "When a yearly price is available, it reflects a discounted annual total. The pricing UI shows percent savings and the effective per-month rate when toggled to yearly."
+  },
+  {
+    "q": "What integrations are included?",
+    "a": "Pro includes common integrations (S3, Slack, PagerDuty). Enterprise supports additional connectors such as Splunk and ServiceNow; see the table for full details."
+  },
+  {
+    "q": "Is there an SLA for Enterprise?",
+    "a": "Yes — Enterprise plans include SLA options (uptime guarantees) and priority support. Contact sales to customize the SLA and uptime percentage."
+  },
+  {
+    "q": "Can I change plans mid-billing period?",
+    "a": "Yes — you can upgrade immediately. Prorations are handled automatically in the billing system; downgrades take effect at the next billing cycle."
+  },
+  {
+    "q": "Do you offer seat or user-based pricing?",
+    "a": "Most plans include a set number of users; additional seats can be added and are billed per user per month for large accounts. Contact sales for enterprise volume pricing."
+  }
+]
