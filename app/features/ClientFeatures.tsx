@@ -195,6 +195,45 @@ export default function ClientFeatures(): JSX.Element {
   const latencyData = filtered.map((r) => r.avgLatency);
   const errorData = filtered.map((r) => r.errorRate);
 
+  const highlights: { title: string; description: string; icon: string }[] = [
+    {
+      title: "AI-Powered IoT Network Health Score",
+      description:
+        "A single health score that summarizes network reliability and device performance using AI-driven signals.",
+      icon: "MdAnalytics",
+    },
+    {
+      title: "Device Status Monitoring",
+      description:
+        "Real-time status for smart office and factory devices, with inventory and connectivity insights.",
+      icon: "MdSensors",
+    },
+    {
+      title: "Real-Time Alerts & Notifications",
+      description:
+        "Instant alerts for anomalies and failures with customizable notification channels for on-call teams.",
+      icon: "MdNotificationsActive",
+    },
+    {
+      title: "Predictive Maintenance Recommendations",
+      description:
+        "AI suggests maintenance actions before failures occur, lowering downtime and maintenance costs.",
+      icon: "MdBuild",
+    },
+    {
+      title: "Historical Analytics & Performance Trends",
+      description:
+        "Drill into historical metrics to spot trends, regressions, and long-term improvements.",
+      icon: "MdHistory",
+    },
+    {
+      title: "Exportable Reports for IT/Operations Teams",
+      description:
+        "Generate PDF/CSV reports for audits, SLAs, and executive summaries tailored for teams.",
+      icon: "MdFileDownload",
+    },
+  ];
+
   return (
     <main className='min-h-screen pb-24'>
       <div className='max-w-7xl mx-auto px-6 pt-14'>
@@ -221,79 +260,6 @@ export default function ClientFeatures(): JSX.Element {
                 Trusted by operators worldwide
               </span>
             </div>
-
-            <Card className='mt-8 p-6 lg:p-8 rounded-3xl'>
-              <div className='flex flex-col lg:flex-row lg:items-start gap-6'>
-                <div className='flex-1'>
-                  <h3 className='text-lg font-semibold'>Live overview</h3>
-                  <p className='text-sm text-white/70 mt-1'>
-                    Real-time trends and alerts across your fleet.
-                  </p>
-
-                  <div className='mt-4'>
-                    <div className='flex flex-wrap items-center justify-center gap-3 mb-4'>
-                      <div className='text-xs text-white/70 mr-2'>Range</div>
-                      {(["1M", "3M", "6M", "1Y"] as const).map((r) => (
-                        <button
-                          key={r}
-                          onClick={() => setRange(r)}
-                          className={`text-sm px-3 py-1 rounded-full ${
-                            range === r
-                              ? "bg-[var(--accent)] text-white"
-                              : "bg-white/3 text-white/80"
-                          }`}
-                        >
-                          {r}
-                        </button>
-                      ))}
-
-                      <div className='ml-3 flex items-center gap-2'>
-                        <label
-                          htmlFor='show-error'
-                          className='text-xs text-white/70'
-                        >
-                          Show error rate
-                        </label>
-                        <Switch
-                          id='show-error'
-                          checked={showError}
-                          onCheckedChange={(val) => setShowError(Boolean(val))}
-                          className={
-                            showError ? "bg-[var(--accent)]" : "bg-white/6"
-                          }
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className='w-full lg:w-64'>
-                  <div className='text-xs text-white/70 mb-2'>
-                    Quick actions
-                  </div>
-                  <div className='flex flex-col gap-2'>
-                    <Link
-                      href='/features/details'
-                      className='text-[var(--accent)] hover:underline'
-                    >
-                      See detailed reference
-                    </Link>
-                  </div>
-                </div>
-              </div>
-              <div>
-                {chartLoading ? (
-                  <div className='h-72 w-full rounded-2xl glass-faint animate-pulse' />
-                ) : (
-                  <FeatureChart
-                    labels={labels}
-                    latencyData={latencyData}
-                    errorData={errorData}
-                    showError={showError}
-                  />
-                )}
-              </div>
-            </Card>
           </div>
 
           <aside className='lg:col-span-5'>
@@ -313,6 +279,76 @@ export default function ClientFeatures(): JSX.Element {
               </ul>
             </Card>
           </aside>
+          <Card className='mt-8 col-span-full p-6 lg:p-8 rounded-3xl'>
+            <div className='flex flex-col lg:flex-row lg:items-start gap-6'>
+              <div className='flex-1'>
+                <h3 className='text-lg font-semibold'>Live overview</h3>
+                <p className='text-sm text-white/70 mt-1'>
+                  Real-time trends and alerts across your fleet.
+                </p>
+
+                <div className='mt-4'>
+                  <div className='flex flex-wrap items-center justify-center gap-3 mb-4'>
+                    <div className='text-xs text-white/70 mr-2'>Range</div>
+                    {(["1M", "3M", "6M", "1Y"] as const).map((r) => (
+                      <button
+                        key={r}
+                        onClick={() => setRange(r)}
+                        className={`text-sm px-3 py-1 rounded-full ${
+                          range === r
+                            ? "bg-[var(--accent)] text-white"
+                            : "bg-white/3 text-white/80"
+                        }`}
+                      >
+                        {r}
+                      </button>
+                    ))}
+
+                    <div className='ml-3 flex items-center gap-2'>
+                      <label
+                        htmlFor='show-error'
+                        className='text-xs text-white/70'
+                      >
+                        Show error rate
+                      </label>
+                      <Switch
+                        id='show-error'
+                        checked={showError}
+                        onCheckedChange={(val) => setShowError(Boolean(val))}
+                        className={
+                          showError ? "bg-[var(--accent)]" : "bg-white/6"
+                        }
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className='w-full lg:w-64'>
+                <div className='text-xs text-white/70 mb-2'>Quick actions</div>
+                <div className='flex flex-col gap-2'>
+                  <Link
+                    href='/features/details'
+                    className='text-[var(--accent)] hover:underline'
+                  >
+                    See detailed reference
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div>
+              {chartLoading ? (
+                <div className='h-72 w-full rounded-2xl glass-faint animate-pulse' />
+              ) : (
+                <FeatureChart
+                  labels={labels}
+                  latencyData={latencyData}
+                  errorData={errorData}
+                  showError={showError}
+                />
+              )}
+            </div>
+          </Card>
         </div>
 
         <section aria-labelledby='features-heading'>
@@ -346,9 +382,9 @@ export default function ClientFeatures(): JSX.Element {
                     (icons as unknown as Record<string, IconType>).MdInfo;
                   return (
                     <motion.div key={b.title} variants={item} className='mb-0'>
-                      <Card className='p-6 glass-faint hover:shadow-2xl transition-transform transform-gpu hover:-translate-y-2 border-l-4 border-transparent hover:border-[rgba(179,45,255,0.22)]'>
-                        <div className='flex items-start gap-4'>
-                          <div className='flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-[rgba(179,45,255,0.12)] to-transparent'>
+                      <Card className='p-5 glass-faint transition-transform transform-gpu hover:-translate-y-1 hover:shadow-md border-l-2 border-transparent hover:border-[rgba(179,45,255,0.12)]'>
+                        <div className='flex items-start gap-3'>
+                          <div className='flex h-12 w-12 items-center justify-center rounded-md bg-gradient-to-br from-[rgba(179,45,255,0.06)] to-transparent'>
                             <Icon className='text-2xl text-[var(--accent)]' />
                           </div>
 
@@ -373,6 +409,56 @@ export default function ClientFeatures(): JSX.Element {
                     </motion.div>
                   );
                 })}
+          </motion.div>
+        </section>
+
+        <section aria-labelledby='highlights-heading' className='mt-8'>
+          <div className='mb-4'>
+            <h2 id='highlights-heading' className='text-2xl font-semibold'>
+              Highlighted features
+            </h2>
+            <p className='text-sm text-white/70 mt-1'>
+              Key capabilities that show our platform operational value.
+            </p>
+          </div>
+
+          <motion.div
+            initial='hidden'
+            animate='show'
+            variants={container}
+            className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'
+          >
+            {highlights.map((h) => {
+              const Icon: IconType =
+                (icons as unknown as Record<string, IconType>)[h.icon] ||
+                (icons as unknown as Record<string, IconType>).MdInfo;
+              return (
+                <motion.div key={h.title} variants={item}>
+                  <Card className='p-5 glass-faint transition-transform transform-gpu hover:-translate-y-1 hover:shadow-md border-l-2 border-transparent hover:border-[rgba(179,45,255,0.12)]'>
+                    <div className='flex items-start gap-3'>
+                      <div className='flex h-12 w-12 items-center justify-center rounded-md bg-gradient-to-br from-[rgba(179,45,255,0.06)] to-transparent'>
+                        <Icon className='text-2xl text-[var(--accent)]' />
+                      </div>
+
+                      <div className='flex-1'>
+                        <div className='text-lg font-semibold'>{h.title}</div>
+                        <div className='mt-2 text-sm text-white/80'>
+                          {h.description}
+                        </div>
+                        <div className='mt-3'>
+                          <Link
+                            href={`/features/details#${slugify(h.title)}`}
+                            className='text-[var(--accent)] text-sm hover:underline'
+                          >
+                            Learn more →
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                </motion.div>
+              );
+            })}
           </motion.div>
         </section>
       </div>
