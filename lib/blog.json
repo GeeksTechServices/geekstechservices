@@ -1,0 +1,97 @@
+[
+  {
+    "slug": "iot-network-health",
+    "title": "How to Improve IoT Network Health: A Practical Guide",
+    "excerpt": "Learn 6 actionable strategies to reduce latency and improve device uptime across distributed fleets.",
+    "href": "/blog/iot-network-health",
+    "image": "/placeholder.svg",
+    "date": "2025-09-10",
+    "author": "Jane Doe",
+    "readingTime": "7 min",
+    "tags": ["iot", "network", "reliability"],
+    "seo": {
+      "title": "Improve IoT Network Health — Practical Guide | GeekStechServices",
+      "description": "Actionable strategies to reduce latency, improve uptime, and design resilient IoT network architectures for distributed fleets.",
+      "keywords": ["IoT", "network health", "latency", "device uptime", "edge"],
+      "canonical": "https://yourdomain.com/blog/iot-network-health",
+      "ogImage": "/placeholder.svg"
+    },
+    "content": "## Introduction\n\nDistributed IoT fleets bring unique networking challenges. In this guide we'll walk through six practical strategies you can apply immediately to reduce latency and improve device uptime.\n\n## 1. Measure first — know your baseline\n\nStart with instrumentation: collect RTT, packet loss, jitter, and connection duration per device. Without a baseline you won't know which optimizations move the needle. Make sure your telemetry is lightweight and sampled to avoid overloading constrained devices.\n\n## 2. Prioritize traffic and use local buffering\n\nNot all data is equal. Prioritize control-plane and critical telemetry over debug-level logs. Buffer non-critical telemetry locally during transient outages and send batched updates when the network is healthy.\n\n- Prioritize: state, alerts, health checks\n- Buffer: debug logs, low-frequency metrics\n- Backoff windows to avoid floods\n\n## 3. Use edge processing and smart gateways\n\nProcessing data closer to devices reduces egress and short-circuits latency-sensitive decisions. Edge gateways can run pre-aggregation, thresholding, and anomaly detection to only forward meaningful events.\n\n## Conclusion\n\nThese steps — measure, prioritize, buffer, and edge-process — are an operational playbook you can adapt to your fleet. Start small, measure impact, and iterate.\n"
+  },
+  {
+    "slug": "grafana-integration",
+    "title": "Integrating GeekStechServices with Grafana",
+    "excerpt": "Step-by-step guide to wire up dashboards and alerting with Grafana.",
+    "href": "/blog/grafana-integration",
+    "image": "/placeholder.svg",
+    "date": "2025-08-28",
+    "author": "Samir Patel",
+    "readingTime": "6 min",
+    "tags": ["grafana", "dashboards", "observability"],
+    "seo": {
+      "title": "Grafana Integration Guide | GeekStechServices",
+      "description": "How to visualize IoT metrics and configure alerting with Grafana for real-time device monitoring.",
+      "keywords": ["Grafana", "dashboards", "IoT", "observability"],
+      "canonical": "https://yourdomain.com/blog/grafana-integration",
+      "ogImage": "/placeholder.svg"
+    },
+    "content": "## Overview\n\nGrafana is an excellent choice for visualizing time series telemetry from IoT devices. This guide shows how to connect GeekStechServices telemetry to Grafana, create dashboards, and set up alerts.\n\n## Connect your data source\n\n1. Choose a backend compatible with Grafana (Prometheus, Loki, InfluxDB, or a hosted TSDB).\n2. Configure retention and labels so device-level queries are efficient.\n\n## Building useful dashboards\n\nFocus on high-signal charts: device connectivity, error rates, and key performance indicators (KPIs) such as average latency and packet loss. Group by device group, firmware revision, or region to surface regressions quickly.\n\n- Uptime heatmap by device group\n- Rolling 5-minute latency median + p95\n- Alert count trend over time\n\n## Alerts and escalation\n\nKeep alerting simple and actionable: avoid noisy thresholds. Use multi-condition alerts (e.g., p95 latency + error-rate) and route critical alerts to PagerDuty or your on-call system.\n\n## Wrap-up\n\nWith the right metrics and sensible alerts, Grafana becomes an operational command center for your fleet. Iterate on dashboards after incidents to capture what matters most.\n"
+  },
+  {
+    "slug": "novafactory-case-study",
+    "title": "Case study: 72% Downtime Reduction at NovaFactory",
+    "excerpt": "A deep dive into the metrics and playbook that delivered measurable improvements.",
+    "href": "/blog/novafactory-case-study",
+    "image": "/placeholder.svg",
+    "date": "2025-07-02",
+    "author": "Alex Morgan",
+    "readingTime": "8 min",
+    "tags": ["case-study", "reliability", "process"],
+    "seo": {
+      "title": "NovaFactory Case Study — 72% Downtime Reduction",
+      "description": "How NovaFactory reduced downtime by 72% using targeted telemetry, automated remediation, and operational playbooks.",
+      "keywords": ["case study", "downtime reduction", "iot reliability"],
+      "canonical": "https://yourdomain.com/blog/novafactory-case-study",
+      "ogImage": "/placeholder.svg"
+    },
+    "content": "## Background\n\nNovaFactory manages distributed robotics across multiple sites. They were experiencing frequent transient outages that impacted throughput and SLAs. GeekStechServices partnered with NovaFactory to instrument, analyze, and operationalize reliability improvements.\n\n## The approach\n\nWe followed a three-phase approach: measurement, automated remediation, and continuous improvement. Measurement revealed patterns around firmware rollouts and regional network instability.\n\n## Key wins and playbook\n\n- 72% reduction in downtime after targeted fixes\n- Automated reboot/playback for flaky devices reduced manual toil\n- Canary rollouts caught a regression before broad impact\n\n## Lessons learned\n\n1. Invest in signal quality — noisy metrics hide real issues.\n2. Automate the common runbook steps to reduce mean time to repair (MTTR).\n3. Pair dashboards with post-incident reviews to close gaps.\n\n## Conclusion\n\nThe NovaFactory partnership illustrates how measurement + automation + process can deliver dramatic reliability gains. These principles generalize to many IoT deployments.\n"
+  },
+  {
+    "slug": "edge-iot-architectures",
+    "title": "Edge-first IoT Architectures: When to Shift Work to the Edge",
+    "excerpt": "Guidance for deciding when edge processing reduces latency, cost, and operational risk for IoT systems.",
+    "href": "/blog/edge-iot-architectures",
+    "image": "/placeholder.svg",
+    "date": "2024-11-06",
+    "author": "Lina Chen",
+    "readingTime": "9 min",
+    "tags": ["edge", "architecture", "cost"],
+    "seo": {
+      "title": "Edge-first IoT Architectures — GeekStechServices",
+      "description": "When to process telemetry at the edge vs. the cloud: latency, cost, privacy, and reliability trade-offs for IoT systems.",
+      "keywords": ["edge computing", "iot architecture", "latency"],
+      "canonical": "https://yourdomain.com/blog/edge-iot-architectures",
+      "ogImage": "/placeholder.svg"
+    },
+    "content": "## Why consider edge-first?\n\nEdge processing reduces round-trip time for latency-sensitive actions and can dramatically cut egress costs for large fleets. It also helps meet data residency and privacy requirements.\n\n## Design patterns\n\nThere are several patterns depending on your needs:\n\n- Tiered aggregation: local gateways pre-aggregate data, forward summaries to the cloud.\n- Event-driven edge: process events at the edge and only forward exceptions.\n- Hybrid: keep critical telemetry local, send bulk metrics asynchronously.\n\n## Trade-offs\n\nShifting to the edge increases operational complexity: you must manage distributed software, plan updates, and ensure consistent security posture. However the benefits for latency and privacy can justify the effort for certain workloads.\n\n## Implementation checklist\n\n1. Define which signals must be local\n2. Build robust OTA/update strategy for edge software\n3. Add health probes and remote debugging capability\n\n## Final thoughts\n\nEdge-first architectures aren't a silver bullet but are highly effective when latency, privacy, or bandwidth costs dominate the equation. Start with a focused pilot and validate the value before broad rollouts.\n"
+  },
+  {
+    "slug": "privacy-telemetry",
+    "title": "Privacy-first Telemetry: Designing Compliant Data Pipelines",
+    "excerpt": "Best practices to collect meaningful telemetry while respecting privacy and compliance requirements.",
+    "href": "/blog/privacy-telemetry",
+    "image": "/placeholder.svg",
+    "date": "2023-03-15",
+    "author": "Ravi Kumar",
+    "readingTime": "8 min",
+    "tags": ["privacy", "telemetry", "compliance"],
+    "seo": {
+      "title": "Privacy-first Telemetry — GeekStechServices",
+      "description": "Approaches to design telemetry pipelines that minimize personal data exposure and meet compliance requirements.",
+      "keywords": ["privacy", "telemetry", "gdpr", "data pipeline"],
+      "canonical": "https://yourdomain.com/blog/privacy-telemetry",
+      "ogImage": "/placeholder.svg"
+    },
+    "content": "## The challenge\n\nTelemetry is invaluable for operational insight but collecting too much personal data increases regulatory and reputational risk. Designing telemetry with privacy in mind reduces these risks and often leads to more focused, useful signals.\n\n## Practical strategies\n\n- Minimize collection: collect only fields needed for observation or debugging.\n- Anonymize and hash identifiers where possible.\n- Use aggregation/sampling for high-volume signals.\n\n## Example pipeline\n\n1. Device samples metrics and applies local aggregation.\n2. Sensitive identifiers are replaced with a one-way hash.\n3. Data is stored in a tier with access controls and retention policies.\n\n## Checklist for compliance\n\n- Map personal data in your telemetry flows\n- Configure retention rules and automated deletion\n- Provide clear documentation and opt-out mechanisms\n\n## Closing\n\nPrivacy-first telemetry preserves user trust and simplifies compliance. Small design changes early in the pipeline avoid large headaches later.\n"
+  }
+]
