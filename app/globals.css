@@ -116,6 +116,12 @@ body {
   border-radius: var(--radius);
 }
 
+/* make glass-strong slightly roomier and give a subtle border */
+.glass-strong {
+  padding: 1rem;
+  border: 1px solid rgba(179, 45, 255, 0.04);
+}
+
 .glass-faint {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.04));
   border: 1px solid rgba(255, 255, 255, 0.03);
@@ -153,6 +159,12 @@ body {
 /* stronger accent used for CTA / feature icons */
 .accent-strong {
   box-shadow: 0 8px 30px rgba(179, 45, 255, 0.16), inset 0 -6px 20px rgba(179, 45, 255, 0.04);
+}
+
+/* Helper for cards that need a bit more elevation in the dark glass theme */
+.card-elevated {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45), 0 6px 18px rgba(179, 45, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 /* subtle tech grid overlay */

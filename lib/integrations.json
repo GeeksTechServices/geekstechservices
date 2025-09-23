@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Datadog",
+    "logo": "/vercel.svg",
+    "href": "https://www.datadoghq.com",
+    "category": "Monitoring",
+    "description": "Stream telemetry to Datadog and correlate device health with your observability layer.",
+    "docs": "https://docs.datadoghq.com/integrations"
+  },
+  {
+    "name": "Grafana",
+    "logo": "/window.svg",
+    "href": "https://grafana.com",
+    "category": "Dashboards",
+    "description": "Visualize IoT metrics and health scores using prebuilt Grafana dashboards.",
+    "docs": "https://grafana.com/docs"
+  },
+  {
+    "name": "Scaleway",
+    "logo": "/globe.svg",
+    "href": "https://www.scaleway.com",
+    "category": "Cloud",
+    "description": "European-focused cloud & edge provider for privacy-aware deployments, VMs, and lightweight serverless workloads.",
+    "docs": "https://www.scaleway.com/en/docs/"
+  },
+  {
+    "name": "PagerDuty",
+    "logo": "/file.svg",
+    "href": "https://pagerduty.com",
+    "category": "Incident Response",
+    "description": "Forward high-priority alerts to your on-call rotation for faster response.",
+    "docs": "https://support.pagerduty.com/docs"
+  },
+  {
+    "name": "Stripe",
+    "logo": "/next.svg",
+    "href": "https://stripe.com",
+    "category": "Billing",
+    "description": "Handle billing, metering and subscription billing for device fleets and teams.",
+    "docs": "https://stripe.com/docs"
+  }
+]

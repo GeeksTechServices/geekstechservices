@@ -1,0 +1,23 @@
+[
+  {
+    "title": "How to Improve IoT Network Health: A Practical Guide",
+    "excerpt": "Learn 6 actionable strategies to reduce latency and improve device uptime across distributed fleets.",
+    "href": "/blog/iot-network-health",
+    "image": "/file.svg",
+    "date": "2025-09-10"
+  },
+  {
+    "title": "Integrating GeekStechServices with Grafana",
+    "excerpt": "Step-by-step guide to wire up dashboards and alerting with Grafana.",
+    "href": "/blog/grafana-integration",
+    "image": "/globe.svg",
+    "date": "2025-08-28"
+  },
+  {
+    "title": "Case study: 72% Downtime Reduction at NovaFactory",
+    "excerpt": "A deep dive into the metrics and playbook that delivered measurable improvements.",
+    "href": "/blog/novafactory-case-study",
+    "image": "/next.svg",
+    "date": "2025-07-02"
+  }
+]

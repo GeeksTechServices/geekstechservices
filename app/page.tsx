@@ -2,6 +2,8 @@ import Hero from "./components/Hero";
 import Testimonials from "./components/Testimonials";
 import Benefits from "./components/Benefits";
 import CTA from "./components/CTA";
+import Integrations from "./components/Integrations";
+import ResourcesPreview from "./components/ResourcesPreview";
 import FAQ from "./components/FAQ";
 import Footer from "./components/Footer";
 
@@ -14,6 +16,8 @@ export default function Home() {
         <Hero />
         <Benefits />
         <CTA />
+        <Integrations />
+        <ResourcesPreview />
         <FAQ />
         <Testimonials />
       </main>
