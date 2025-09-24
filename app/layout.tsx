@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 // root layout: global providers only. Group-specific layouts will handle the header.
-import CookieBanner from "./components/CookieBanner.client";
 import { ToastProvider, ToastViewport } from "@/components/ui/toast";
 
 const geistSans = Geist({
