@@ -1,5 +1,5 @@
 import React from "react";
-import BlogsShowcase from "@/app/components/BlogsShowcase.new";
+import BlogsShowcase from "@/app/components/BlogsShowcase";
 
 export const metadata = {
   title: "Blogs — GeekStechServices",

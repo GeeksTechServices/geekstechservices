@@ -4,6 +4,7 @@ import React, { useMemo, useState } from "react";
 import blogsData from "@/lib/blogs.json";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -11,343 +12,358 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Calendar,
   User,
+  ArrowRight,
   Share2,
-  ExternalLink,
+  Heart,
+  Bookmark,
+  Filter,
+  X,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
 
 const PAGE_SIZE = 6;
 
-function getAllTags(posts: any[]) {
+type BlogPost = {
+  id: string | number;
+  title: string;
+  excerpt: string;
+  image: string;
+  author: string;
+  date: string;
+  slug: string;
+  tags?: string[];
+};
+
+function getAllTags(posts: BlogPost[]) {
   const s = new Set<string>();
   posts.forEach((p) => (p.tags || []).forEach((t: string) => s.add(t)));
   return Array.from(s).sort();
 }
 
-function shareUrl(platform: string, post: any) {
-  const url =
-    typeof window !== "undefined"
-      ? window.location.origin + `/blogs/${post.slug}`
-      : `/blogs/${post.slug}`;
-  const text = encodeURIComponent(`${post.title} — ${post.excerpt}`);
-  switch (platform) {
-    case "twitter":
-      return `https://twitter.com/intent/tweet?url=${encodeURIComponent(
-        url
-      )}&text=${text}`;
-    case "linkedin":
-      return `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
-        url
-      )}`;
-    case "facebook":
-      return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-        url
-      )}`;
-    default:
-      return url;
-  }
+function formatDate(dateStr: string) {
+  return new Date(dateStr).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
 }
 
 export default function BlogsShowcase() {
-  const posts = Array.isArray(blogsData) ? blogsData : [];
-  const tags = useMemo(() => getAllTags(posts), [posts]);
+  const router = useRouter();
+  const [selectedTag, setSelectedTag] = useState<string>("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [showFilters, setShowFilters] = useState(false);
 
-  const [activeTag, setActiveTag] = useState<string | null>(null);
-  const [page, setPage] = useState(1);
+  const allTags = useMemo(() => getAllTags(blogsData), []);
 
-  const filtered = useMemo(() => {
-    if (!activeTag) return posts;
-    return posts.filter(
-      (p) => Array.isArray(p.tags) && p.tags.includes(activeTag)
-    );
-  }, [posts, activeTag]);
+  const filteredPosts = useMemo(() => {
+    if (selectedTag === "all") return blogsData;
+    return blogsData.filter((post) => (post.tags || []).includes(selectedTag));
+  }, [selectedTag]);
 
-  const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const totalPages = Math.ceil(filteredPosts.length / PAGE_SIZE);
+  const startIdx = (currentPage - 1) * PAGE_SIZE;
+  const currentPosts = filteredPosts.slice(startIdx, startIdx + PAGE_SIZE);
 
-  const paged = useMemo(() => {
-    const start = (page - 1) * PAGE_SIZE;
-    return filtered.slice(start, start + PAGE_SIZE);
-  }, [filtered, page]);
-
-  const relatedFor = (post: any) => {
-    if (!post.tags || post.tags.length === 0) return [];
-    return posts
-      .filter(
-        (p) =>
-          p.id !== post.id &&
-          (p.tags || []).some((t: string) => post.tags.includes(t))
-      )
-      .slice(0, 2);
+  const handleTagChange = (tag: string) => {
+    setSelectedTag(tag);
+    setCurrentPage(1);
+    setShowFilters(false);
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-    },
-  };
+  const relatedPosts = useMemo(() => {
+    if (currentPosts.length === 0) return [];
+    const currentTags = new Set(currentPosts.flatMap((p) => p.tags || []));
+    return blogsData
+      .filter((post) => !currentPosts.includes(post))
+      .filter((post) => (post.tags || []).some((tag) => currentTags.has(tag)))
+      .slice(0, 3);
+  }, [currentPosts]);
 
   return (
-    <div className='space-y-8'>
-      {/* Filter Section */}
-      <div className='flex flex-col md:flex-row items-start md:items-center justify-between gap-6'>
-        <div className='flex flex-wrap gap-3'>
-          <Button
-            variant={!activeTag ? "default" : "outline"}
-            size='sm'
-            onClick={() => {
-              setActiveTag(null);
-              setPage(1);
-            }}
-            className={
-              !activeTag
-                ? "bg-[var(--accent)] text-black hover:bg-[var(--accent)]/90"
-                : ""
-            }
+    <div className='min-h-screen bg-black/95 text-white'>
+      {/* Header Section */}
+      <div className='relative py-20 px-6'>
+        <div className='container mx-auto max-w-6xl'>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className='text-center space-y-6'
           >
-            All Posts
-          </Button>
-          {tags.map((t) => (
-            <Button
-              key={t}
-              variant={activeTag === t ? "default" : "outline"}
-              size='sm'
-              onClick={() => {
-                setActiveTag(t === activeTag ? null : t);
-                setPage(1);
-              }}
-              className={
-                activeTag === t
-                  ? "bg-[var(--accent)] text-black hover:bg-[var(--accent)]/90"
-                  : ""
-              }
-            >
-              {t}
-            </Button>
-          ))}
-        </div>
-
-        <div className='flex items-center gap-2 text-sm text-white/60'>
-          <span>
-            Showing {filtered.length} article{filtered.length !== 1 ? "s" : ""}
-          </span>
-          {activeTag && (
-            <Badge variant='secondary' className='ml-2'>
-              #{activeTag}
-            </Badge>
-          )}
+            <h1 className='text-6xl font-bold bg-gradient-to-r from-white via-[var(--accent)] to-white bg-clip-text text-transparent'>
+              Latest Insights
+            </h1>
+            <p className='text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed'>
+              Explore cutting-edge perspectives on IoT, operations, and
+              technology solutions that drive business transformation.
+            </p>
+          </motion.div>
         </div>
       </div>
 
-      {/* Blog Grid */}
-      <AnimatePresence mode='wait'>
-        <motion.div
-          key={(activeTag || "all") + page}
-          variants={containerVariants}
-          initial='hidden'
-          animate='visible'
-          className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'
-        >
-          {paged.map((post) => (
-            <motion.article
-              key={post.id}
-              variants={itemVariants}
-              whileHover={{ y: -8 }}
-              className='group cursor-pointer'
-            >
-              <Card className='h-full overflow-hidden border-0 bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm relative'>
-                {/* Large Image Section */}
-                <div className='relative h-64 w-full overflow-hidden'>
-                  <Image
-                    src={post.image.replace("/public", "")}
-                    alt={post.title}
-                    fill
-                    className='object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-75'
-                  />
-
-                  {/* Gradient Overlay */}
-                  <div className='absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500' />
-
-                  {/* Hover Content Overlay */}
-                  <div className='absolute inset-0 p-6 flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0'>
-                    {/* Top Section - Tags */}
-                    <div className='flex flex-wrap gap-2'>
-                      {post.tags?.slice(0, 3).map((tag: string) => (
-                        <Badge
-                          key={tag}
-                          variant='secondary'
-                          className='text-xs bg-white/20 text-white border-0 backdrop-blur-md hover:bg-[var(--accent)] hover:text-black transition-colors duration-300'
-                        >
-                          #{tag}
-                        </Badge>
-                      ))}
-                    </div>
-
-                    {/* Bottom Section - Title & Meta */}
-                    <div className='space-y-3'>
-                      <h3 className='text-xl font-bold text-white leading-tight line-clamp-2'>
-                        {post.title}
-                      </h3>
-                      <p className='text-sm text-white/90 leading-relaxed line-clamp-2'>
-                        {post.excerpt}
-                      </p>
-
-                      {/* Meta Info */}
-                      <div className='flex items-center justify-between'>
-                        <div className='flex items-center gap-3 text-xs text-white/80'>
-                          <div className='flex items-center gap-1'>
-                            <User className='h-3 w-3' />
-                            <span>{post.author}</span>
-                          </div>
-                          <div className='flex items-center gap-1'>
-                            <Calendar className='h-3 w-3' />
-                            <span>
-                              {new Date(post.date).toLocaleDateString()}
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Action Buttons */}
-                        <div className='flex items-center gap-2'>
-                          <Button
-                            size='sm'
-                            variant='ghost'
-                            className='h-8 w-8 p-0 bg-white/20 hover:bg-[var(--accent)] hover:text-black backdrop-blur-md transition-all duration-300'
-                            asChild
-                          >
-                            <a
-                              href={shareUrl("twitter", post)}
-                              target='_blank'
-                              rel='noreferrer'
-                              aria-label='Share on Twitter'
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              <Share2 className='h-4 w-4' />
-                            </a>
-                          </Button>
-                          <Button
-                            size='sm'
-                            variant='default'
-                            className='bg-[var(--accent)] text-black hover:bg-[var(--accent)]/90 px-4'
-                            asChild
-                          >
-                            <Link
-                              href={`/blogs/${post.slug}`}
-                              className='flex items-center gap-1'
-                            >
-                              Read
-                              <ExternalLink className='h-3 w-3' />
-                            </Link>
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Static Corner Badge */}
-                  <div className='absolute top-4 right-4 opacity-100 group-hover:opacity-0 transition-opacity duration-300'>
-                    <Badge
-                      variant='secondary'
-                      className='bg-black/60 text-white border-0 backdrop-blur-sm'
-                    >
-                      {post.tags?.[0]}
-                    </Badge>
-                  </div>
-                </div>
-
-                {/* Compact Bottom Section - Always Visible */}
-                <div className='p-4 space-y-3 bg-gradient-to-t from-black/5 to-transparent'>
-                  {/* Title & Excerpt */}
-                  <div className='space-y-2 group-hover:opacity-50 transition-opacity duration-300'>
-                    <Link href={`/blogs/${post.slug}`} className='group/title'>
-                      <h3 className='text-lg font-semibold leading-tight group-hover/title:text-[var(--accent)] transition-colors duration-200 line-clamp-2'>
-                        {post.title}
-                      </h3>
-                    </Link>
-                    <p className='text-sm text-white/70 leading-relaxed line-clamp-2'>
-                      {post.excerpt}
-                    </p>
-                  </div>
-
-                  {/* Meta & Related - Compact */}
-                  <div className='flex items-center justify-between text-xs text-white/50 group-hover:opacity-50 transition-opacity duration-300'>
-                    <div className='flex items-center gap-2'>
-                      <span>{post.author}</span>
-                      <span>•</span>
-                      <span>{new Date(post.date).toLocaleDateString()}</span>
-                    </div>
-
-                    {relatedFor(post).length > 0 && (
-                      <div className='flex items-center gap-1'>
-                        <span>+{relatedFor(post).length} related</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </Card>
-            </motion.article>
-          ))}
-        </motion.div>
-      </AnimatePresence>
-
-      {/* Pagination */}
-      {pageCount > 1 && (
-        <div className='flex items-center justify-center gap-2'>
-          <Button
-            variant='outline'
-            size='sm'
-            onClick={() => setPage((s) => Math.max(1, s - 1))}
-            disabled={page === 1}
-            className='flex items-center gap-2'
-          >
-            <ChevronLeft className='h-4 w-4' />
-            Previous
-          </Button>
-
-          <div className='flex items-center gap-2 mx-4'>
-            {Array.from({ length: pageCount }, (_, i) => i + 1).map(
-              (pageNum) => (
-                <Button
-                  key={pageNum}
-                  variant={page === pageNum ? "default" : "ghost"}
-                  size='sm'
-                  onClick={() => setPage(pageNum)}
-                  className={`w-10 h-10 ${
-                    page === pageNum
-                      ? "bg-[var(--accent)] text-black hover:bg-[var(--accent)]/90"
-                      : ""
-                  }`}
+      {/* Filter Section */}
+      <div className='sticky top-0 z-20 bg-black/80 backdrop-blur-xl border-b border-white/10'>
+        <div className='container mx-auto max-w-6xl px-6 py-4'>
+          <div className='flex items-center justify-between'>
+            <div className='flex items-center space-x-4'>
+              <span className='text-sm text-gray-400 font-medium'>
+                {filteredPosts.length} article
+                {filteredPosts.length !== 1 ? "s" : ""}
+              </span>
+              {selectedTag !== "all" && (
+                <Badge
+                  variant='secondary'
+                  className='bg-[var(--accent)]/20 text-[var(--accent)] border-transparent'
                 >
-                  {pageNum}
-                </Button>
-              )
-            )}
+                  {selectedTag}
+                  <X
+                    className='w-3 h-3 ml-1 cursor-pointer hover:text-white transition-colors'
+                    onClick={() => handleTagChange("all")}
+                  />
+                </Badge>
+              )}
+            </div>
+
+            <Button
+              variant='outline'
+              size='sm'
+              onClick={() => setShowFilters(!showFilters)}
+              className='glass border-white/20 hover:border-[var(--accent)]/50 transition-all duration-300'
+            >
+              <Filter className='w-4 h-4 mr-2' />
+              Filter by Topic
+            </Button>
           </div>
 
-          <Button
-            variant='outline'
-            size='sm'
-            onClick={() => setPage((s) => Math.min(pageCount, s + 1))}
-            disabled={page === pageCount}
-            className='flex items-center gap-2'
-          >
-            Next
-            <ChevronRight className='h-4 w-4' />
-          </Button>
+          <AnimatePresence>
+            {showFilters && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                className='mt-4 pt-4 border-t border-white/10'
+              >
+                <div className='flex flex-wrap gap-2'>
+                  <Button
+                    variant={selectedTag === "all" ? "default" : "outline"}
+                    size='sm'
+                    onClick={() => handleTagChange("all")}
+                    className={`transition-all duration-300 ${
+                      selectedTag === "all"
+                        ? "bg-[var(--accent)] hover:bg-[var(--accent)]/80 text-white"
+                        : "glass border-white/20 hover:border-[var(--accent)]/50"
+                    }`}
+                  >
+                    All Topics
+                  </Button>
+                  {allTags.map((tag) => (
+                    <Button
+                      key={tag}
+                      variant={selectedTag === tag ? "default" : "outline"}
+                      size='sm'
+                      onClick={() => handleTagChange(tag)}
+                      className={`transition-all duration-300 capitalize ${
+                        selectedTag === tag
+                          ? "bg-[var(--accent)] hover:bg-[var(--accent)]/80 text-white"
+                          : "glass border-white/20 hover:border-[var(--accent)]/50"
+                      }`}
+                    >
+                      {tag}
+                    </Button>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-      )}
+      </div>
+
+      {/* Blog Posts Grid */}
+      <div className='container mx-auto max-w-6xl px-6 py-12'>
+        <motion.div layout className='space-y-8'>
+          <AnimatePresence mode='wait'>
+            {currentPosts.map((post, index) => (
+              <motion.div
+                key={post.id}
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <Card
+                  className='group glass border-white/10 hover:border-[var(--accent)]/30 transition-all duration-500 overflow-hidden cursor-pointer'
+                  onClick={() => router.push(`/blogs/${post.slug}`)}
+                  role={"link"}
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      router.push(`/blogs/${post.slug}`);
+                    }
+                  }}
+                >
+                  <div className='relative lg:flex'>
+                    {/* Image Section */}
+                    <div className='relative lg:w-80 h-64 lg:h-auto overflow-hidden'>
+                      <Image
+                        src={post.image}
+                        alt={post.title}
+                        fill
+                        className='object-cover transition-all duration-700 group-hover:scale-105'
+                      />
+
+                      {/* Hover Overlay with Actions */}
+                      <div className='absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center'>
+                        <div className='flex space-x-3'>
+                          <Button
+                            size='sm'
+                            variant='secondary'
+                            className='bg-white/20 hover:bg-white/30 text-white border-none backdrop-blur-sm'
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              // TODO: like action
+                            }}
+                          >
+                            <Heart className='w-4 h-4' />
+                          </Button>
+                          <Button
+                            size='sm'
+                            variant='secondary'
+                            className='bg-white/20 hover:bg-white/30 text-white border-none backdrop-blur-sm'
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              // TODO: bookmark action
+                            }}
+                          >
+                            <Bookmark className='w-4 h-4' />
+                          </Button>
+                          <Button
+                            size='sm'
+                            variant='secondary'
+                            className='bg-white/20 hover:bg-white/30 text-white border-none backdrop-blur-sm'
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              // TODO: share action
+                            }}
+                          >
+                            <Share2 className='w-4 h-4' />
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Content Section */}
+                    <div className='flex-1 p-8 lg:p-10'>
+                      <div className='h-full flex flex-col justify-between'>
+                        <div className='space-y-4'>
+                          {/* Tags */}
+                          <div className='flex flex-wrap gap-2'>
+                            {(post.tags || []).slice(0, 3).map((tag) => (
+                              <Badge
+                                key={tag}
+                                variant='secondary'
+                                className='rounded-full px-2 py-0.5 bg-[var(--accent)]/10 text-[var(--accent)] border-transparent capitalize text-xs'
+                              >
+                                {tag}
+                              </Badge>
+                            ))}
+                          </div>
+
+                          {/* Title */}
+                          <h2 className='text-2xl lg:text-3xl font-bold text-white group-hover:text-[var(--accent)] transition-colors duration-300 leading-tight'>
+                            {post.title}
+                          </h2>
+
+                          {/* Excerpt */}
+                          <p className='text-gray-300 leading-relaxed text-lg'>
+                            {post.excerpt}
+                          </p>
+                        </div>
+
+                        {/* Meta and CTA */}
+                        <div className='flex items-center justify-between pt-6 mt-6 border-t border-white/10'>
+                          <div className='flex items-center space-x-4 text-sm text-gray-400'>
+                            <div className='flex items-center space-x-1'>
+                              <User className='w-4 h-4' />
+                              <span>{post.author}</span>
+                            </div>
+                            <div className='flex items-center space-x-1'>
+                              <Calendar className='w-4 h-4' />
+                              <span>{formatDate(post.date)}</span>
+                            </div>
+                          </div>
+
+                          <Button
+                            variant='outline'
+                            size='sm'
+                            className='glass border-[var(--accent)]/30 text-[var(--accent)] hover:bg-[var(--accent)]/10 hover:border-[var(--accent)] transition-all duration-300 group/btn'
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              router.push(`/blogs/${post.slug}`);
+                            }}
+                          >
+                            Read More
+                            <ArrowRight className='w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform duration-300' />
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className='flex items-center justify-center space-x-4 mt-16'>
+            <Button
+              variant='outline'
+              size='sm'
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage(currentPage - 1)}
+              className='glass border-white/20 hover:border-[var(--accent)]/50 disabled:opacity-50 transition-all duration-300'
+            >
+              <ChevronLeft className='w-4 h-4 mr-1' />
+              Previous
+            </Button>
+
+            <div className='flex space-x-2'>
+              {Array.from({ length: totalPages }, (_, i) => (
+                <Button
+                  key={i + 1}
+                  variant={currentPage === i + 1 ? "default" : "outline"}
+                  size='sm'
+                  onClick={() => setCurrentPage(i + 1)}
+                  className={`w-10 h-10 transition-all duration-300 ${
+                    currentPage === i + 1
+                      ? "bg-[var(--accent)] hover:bg-[var(--accent)]/80 text-white"
+                      : "glass border-white/20 hover:border-[var(--accent)]/50"
+                  }`}
+                >
+                  {i + 1}
+                </Button>
+              ))}
+            </div>
+
+            <Button
+              variant='outline'
+              size='sm'
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage(currentPage + 1)}
+              className='glass border-white/20 hover:border-[var(--accent)]/50 disabled:opacity-50 transition-all duration-300'
+            >
+              Next
+              <ChevronRight className='w-4 h-4 ml-1' />
+            </Button>
+          </div>
+        )}
+      </div>
+
+      {/* Related posts removed from showcase; moved to individual blog pages */}
     </div>
   );
 }
