@@ -117,13 +117,11 @@ export default function Header() {
                   </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
-
-              
             </NavigationMenuList>
           </NavigationMenu>
         </nav>
 
-  {/* Mobile hamburger */}
+        {/* Mobile hamburger */}
         <div className='sm:hidden' ref={menuRef}>
           <button
             aria-label={open ? "Close menu" : "Open menu"}
@@ -199,11 +197,17 @@ export default function Header() {
                     Contact
                   </Link>
                 </li>
-                
+
                 {user ? (
                   <>
                     <li className='mt-2'>
-                      <button onClick={() => { setOpen(false); handleSignOut(); }} className='w-full text-left block px-2 py-2 rounded hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]'>
+                      <button
+                        onClick={() => {
+                          setOpen(false);
+                          handleSignOut();
+                        }}
+                        className='w-full text-left block px-2 py-2 rounded hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]'
+                      >
                         Sign out
                       </button>
                     </li>
@@ -211,14 +215,22 @@ export default function Header() {
                 ) : (
                   <>
                     <li className='mt-2'>
-                      <Link href='/auth/signin' onClick={() => setOpen(false)} className='block'>
+                      <Link
+                        href='/auth/signin'
+                        onClick={() => setOpen(false)}
+                        className='block'
+                      >
                         <Button variant='ghost' className='w-full'>
                           Sign in
                         </Button>
                       </Link>
                     </li>
                     <li>
-                      <Link href='/auth/signup' onClick={() => setOpen(false)} className='block'>
+                      <Link
+                        href='/auth/signup'
+                        onClick={() => setOpen(false)}
+                        className='block'
+                      >
                         <Button className='w-full'>Sign up</Button>
                       </Link>
                     </li>
@@ -238,9 +250,18 @@ export default function Header() {
                   {user.displayName || user.email}
                 </span>
                 <DropdownMenuTrigger asChild>
-                  <button aria-label='Account' className='ml-2 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]'>
+                  <button
+                    aria-label='Account'
+                    className='ml-2 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]'
+                  >
                     <Avatar>
-                      {user.photoURL ? <AvatarImage src={user.photoURL} alt='avatar' /> : <AvatarFallback>{(user.displayName || "U").charAt(0)}</AvatarFallback>}
+                      {user.photoURL ? (
+                        <AvatarImage src={user.photoURL} alt='avatar' />
+                      ) : (
+                        <AvatarFallback>
+                          {(user.displayName || "U").charAt(0)}
+                        </AvatarFallback>
+                      )}
                     </Avatar>
                   </button>
                 </DropdownMenuTrigger>
@@ -248,13 +269,19 @@ export default function Header() {
 
               <DropdownMenuContent>
                 <DropdownMenuItem asChild>
-                  <Link href="/account/profile" className="block w-full">Profile</Link>
+                  <Link href='/account/profile' className='block w-full'>
+                    Profile
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href="/account/settings" className="block w-full">Settings</Link>
+                  <Link href='/account/settings' className='block w-full'>
+                    Settings
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onSelect={() => handleSignOut()}>Sign out</DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => handleSignOut()}>
+                  Sign out
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (

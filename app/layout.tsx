@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "./components/ui/Header";
+// root layout: global providers only. Group-specific layouts will handle the header.
 import CookieBanner from "./components/CookieBanner.client";
 import { ToastProvider, ToastViewport } from "@/components/ui/toast";
 
@@ -31,9 +31,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[var(--bg-dark)] text-white`}
       >
         <ToastProvider>
-          <Header />
           {children}
-          <CookieBanner />
           <ToastViewport />
         </ToastProvider>
       </body>

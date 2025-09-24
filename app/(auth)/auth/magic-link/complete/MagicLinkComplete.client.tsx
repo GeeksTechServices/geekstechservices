@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getFirebaseAuth } from "../../../../lib/firebaseClient";
+import { getFirebaseAuth } from "../../../../../lib/firebaseClient";
 import { isSignInWithEmailLink, signInWithEmailLink } from "firebase/auth";
 
 export default function MagicLinkComplete() {

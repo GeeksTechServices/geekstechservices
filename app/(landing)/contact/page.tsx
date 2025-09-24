@@ -1,7 +1,7 @@
 import React from "react";
 import contactData from "@/lib/contact.json";
 import Image from "next/image";
-import Turnstile from "@/app/contact/Turnstile.client";
+import Turnstile from "@/app/(landing)/contact/Turnstile.client";
 
 export const metadata = {
   title: "Contact — GeekStechServices",
@@ -19,9 +19,9 @@ export default function ContactPage() {
           <div className='space-y-6'>
             <h1 className='text-5xl font-extrabold'>Get in touch</h1>
             <p className='text-lg text-gray-300 max-w-xl'>
-              We&apos;re happy to help. Whether you&apos;re evaluating our services or
-              ready to start, tell us a little about your project and we&apos;ll
-              respond within one business day.
+              We&apos;re happy to help. Whether you&apos;re evaluating our
+              services or ready to start, tell us a little about your project
+              and we&apos;ll respond within one business day.
             </p>
 
             <div className='space-y-3 mt-6'>
@@ -137,8 +137,8 @@ export default function ContactPage() {
             <div className='mt-4'>
               <h4 className='text-lg font-medium mb-2'>Need help deciding?</h4>
               <p className='text-gray-300'>
-                Book a quick 15-minute discovery call and we&apos;ll point you in the
-                right direction.
+                Book a quick 15-minute discovery call and we&apos;ll point you
+                in the right direction.
               </p>
               <div className='mt-4'>
                 <button className='bg-transparent border border-white/10 px-4 py-2 rounded'>

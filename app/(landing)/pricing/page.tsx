@@ -1,9 +1,9 @@
 import React from "react";
 import Link from "next/link";
-import PricingHero from "../components/PricingHero";
-import PricingCards from "../components/PricingCards";
-import ComparisonTable from "../components/ComparisonTable";
-import PricingFAQ from "../components/PricingFAQ";
+import PricingHero from "../../components/PricingHero";
+import PricingCards from "../../components/PricingCards";
+import ComparisonTable from "../../components/ComparisonTable";
+import PricingFAQ from "../../components/PricingFAQ";
 
 export const metadata = {
   title: "Pricing — GeekStechServices",

@@ -3,8 +3,8 @@ import blogsData from "@/lib/blogs.json";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import ShareBar from "@/app/blogs/components/ShareBar.client";
-import BlogComments from "@/app/blogs/components/BlogComments.client";
+import ShareBar from "@/app/(landing)/blogs/components/ShareBar.client";
+import BlogComments from "@/app/(landing)/blogs/components/BlogComments.client";
 
 type BlogPost = {
   id: string | number;
@@ -30,7 +30,9 @@ function formatDate(dateStr: string) {
   });
 }
 
-export default async function BlogPostPage(props: { params: { slug: string } }) {
+export default async function BlogPostPage(props: {
+  params: { slug: string };
+}) {
   const { params } = props;
   const post = (blogsData as BlogPost[]).find((p) => p.slug === params.slug);
   if (!post) return notFound();
