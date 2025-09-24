@@ -99,6 +99,17 @@ export default function Header() {
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
                   <Link
+                    href='/about'
+                    className='px-3 py-2 text-sm text-gray-200 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]'
+                  >
+                    About
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild>
+                  <Link
                     href='/pricing'
                     className='px-3 py-2 text-sm text-gray-200 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]'
                   >
@@ -177,6 +188,15 @@ export default function Header() {
                     className='block px-2 py-2 rounded hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]'
                   >
                     Blogs
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href='/about'
+                    onClick={() => setOpen(false)}
+                    className='block px-2 py-2 rounded hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]'
+                  >
+                    About
                   </Link>
                 </li>
                 <li>
