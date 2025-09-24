@@ -59,7 +59,7 @@ export default function ContactPage() {
           <div>
             <div className='bg-white/5 p-6 rounded-xl'>
               <form
-                action='https://formspree.io/f/your-form-id' /* replace with your Formspree endpoint */
+                action='https://formspree.io/f/xwprkzgq'
                 method='POST'
                 className='space-y-4'
               >

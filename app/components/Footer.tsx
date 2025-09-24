@@ -39,13 +39,61 @@ export default function Footer() {
   const year = new Date().getFullYear();
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [subscribeError, setSubscribeError] = useState<string | null>(null);
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const FORMSPREE_ID = process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID || "";
+
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
-    // placeholder: no real backend yet
-    setSubscribed(true);
-    setEmail("");
+    setSubscribeError(null);
+    if (!email) {
+      setSubscribeError("Please enter your email address.");
+      return;
+    }
+    // basic email validation
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setSubscribeError("Please enter a valid email address.");
+      return;
+    }
+
+    if (!FORMSPREE_ID) {
+      setSubscribeError(
+        "Formspree not configured. Set NEXT_PUBLIC_FORMSPREE_FORM_ID."
+      );
+      console.warn(
+        "Missing NEXT_PUBLIC_FORMSPREE_FORM_ID — subscribe will not be sent."
+      );
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        const msg =
+          (data && data.error) || `Subscription failed (${res.status})`;
+        setSubscribeError(msg);
+        console.warn("Formspree error", data);
+      } else {
+        setSubscribed(true);
+        setEmail("");
+      }
+    } catch (err) {
+      console.error(err);
+      setSubscribeError("Network error — please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
   return (
     <Card className='max-w-6xl mx-auto px-6 py-12 mt-12 bg-transparent border-t border-muted'>
@@ -53,22 +101,40 @@ export default function Footer() {
         <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
           <div className='space-y-4'>
             <Logo />
-            <p className='mt-2 text-gray-300 max-w-sm'>{typedFooter.elevatorPitch}</p>
+            <p className='mt-2 text-gray-300 max-w-sm'>
+              {typedFooter.elevatorPitch}
+            </p>
 
             <form onSubmit={handleSubscribe} className='mt-4'>
               {subscribed ? (
-                <div className='text-sm text-green-400'>Thanks — you&apos;re subscribed.</div>
+                <div className='text-sm text-green-400'>
+                  Thanks — you&apos;re subscribed.
+                </div>
               ) : (
-                <div className='flex items-center gap-2'>
-                  <input
-                    type='email'
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder='Email address'
-                    className='bg-white/3 placeholder-white/60 rounded-md px-3 py-2 text-sm flex-1'
-                    aria-label='Email address'
-                  />
-                  <button className='px-3 py-2 rounded-md bg-[var(--accent)] text-black text-sm'>Subscribe</button>
+                <div>
+                  <div className='flex items-center gap-2'>
+                    <input
+                      type='email'
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder='Email address'
+                      className='bg-white/3 placeholder-white/60 rounded-md px-3 py-2 text-sm flex-1'
+                      aria-label='Email address'
+                      disabled={submitting}
+                    />
+                    <button
+                      className='px-3 py-2 rounded-md bg-[var(--accent)] text-black text-sm disabled:opacity-60'
+                      onClick={handleSubscribe}
+                      disabled={submitting}
+                    >
+                      {submitting ? "Sending..." : "Subscribe"}
+                    </button>
+                  </div>
+                  {subscribeError && (
+                    <div className='mt-2 text-sm text-rose-400'>
+                      {subscribeError}
+                    </div>
+                  )}
                 </div>
               )}
             </form>
@@ -157,7 +223,10 @@ export default function Footer() {
                 return (
                   <>
                     <span>{parts[0]}</span>
-                    <Link href='/' className='text-gray-300 hover:text-[var(--accent)]'>
+                    <Link
+                      href='/'
+                      className='text-gray-300 hover:text-[var(--accent)]'
+                    >
                       {company}
                     </Link>
                     <span>{parts[1]}</span>
