@@ -18,7 +18,7 @@ type BlogPost = {
   content?: string;
 };
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   return blogsData.map((post: BlogPost) => ({ slug: post.slug }));
 }
 

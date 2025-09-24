@@ -4,7 +4,11 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
-export default function BlogComments() {
+type BlogCommentsProps = {
+  slug?: string;
+};
+
+export default function BlogComments({ slug }: BlogCommentsProps) {
   const [comment, setComment] = useState("");
   const [sending, setSending] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -39,7 +43,9 @@ export default function BlogComments() {
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           placeholder={
-            signedIn ? "Write your comment..." : "Sign in to leave a comment"
+            signedIn
+              ? `Write your comment about ${slug ?? "this post"}...`
+              : "Sign in to leave a comment"
           }
           disabled={!signedIn || sending}
           className='bg-transparent border-white/10 text-white'
