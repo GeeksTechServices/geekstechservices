@@ -31,10 +31,12 @@ function formatDate(dateStr: string) {
 }
 
 export default async function BlogPostPage(props: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
   const { params } = props;
-  const post = (blogsData as BlogPost[]).find((p) => p.slug === params.slug);
+  const post = (blogsData as BlogPost[]).find(
+    async (p) => p.slug === (await params).slug
+  );
   if (!post) return notFound();
 
   const body =
