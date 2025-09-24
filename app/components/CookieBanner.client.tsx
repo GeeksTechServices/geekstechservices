@@ -27,6 +27,8 @@ export default function CookieBanner() {
       const closed = localStorage.getItem("cookie_banner_closed");
       if (!hasCookie && !closed) setVisible(true);
     } catch (e) {
+      // if error (e.g. localStorage not available), just show the banner
+      console.error("Error accessing localStorage:", e);
       setVisible(true);
     }
   }, []);
@@ -40,7 +42,9 @@ export default function CookieBanner() {
     // user closed without consenting: store closed marker in localStorage (do not create cookie)
     try {
       localStorage.setItem("cookie_banner_closed", "1");
-    } catch (e) {}
+    } catch (e) {
+      console.error("Error accessing localStorage:", e);
+    }
     setVisible(false);
   };
 

@@ -2,7 +2,6 @@
 
 import React, { useMemo, useState } from "react";
 import blogsData from "@/lib/blogs.json";
-import Image from "next/image";
 import Link from "next/link";
 
 const PAGE_SIZE = 4;

@@ -3,7 +3,6 @@
 import React, { useMemo, useState } from "react";
 import blogsData from "@/lib/blogs.json";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -72,14 +71,14 @@ export default function BlogsShowcase() {
     setShowFilters(false);
   };
 
-  const relatedPosts = useMemo(() => {
-    if (currentPosts.length === 0) return [];
-    const currentTags = new Set(currentPosts.flatMap((p) => p.tags || []));
-    return blogsData
-      .filter((post) => !currentPosts.includes(post))
-      .filter((post) => (post.tags || []).some((tag) => currentTags.has(tag)))
-      .slice(0, 3);
-  }, [currentPosts]);
+  // const relatedPosts = useMemo(() => {
+  //   if (currentPosts.length === 0) return [];
+  //   const currentTags = new Set(currentPosts.flatMap((p) => p.tags || []));
+  //   return blogsData
+  //     .filter((post) => !currentPosts.includes(post))
+  //     .filter((post) => (post.tags || []).some((tag) => currentTags.has(tag)))
+  //     .slice(0, 3);
+  // }, [currentPosts]);
 
   return (
     <div className='min-h-screen bg-black/95 text-white'>

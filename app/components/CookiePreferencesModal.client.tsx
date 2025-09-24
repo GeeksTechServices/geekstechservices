@@ -32,7 +32,7 @@ export default function CookiePreferencesModal({
         );
       }
     } catch (e) {
-      // ignore
+      console.error("Error accessing localStorage:", e);
     }
   }, [open]);
 

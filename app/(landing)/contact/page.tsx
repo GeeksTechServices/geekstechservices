@@ -1,6 +1,5 @@
 import React from "react";
 import contactData from "@/lib/contact.json";
-import Image from "next/image";
 import Turnstile from "@/app/(landing)/contact/Turnstile.client";
 
 export const metadata = {
