@@ -9,6 +9,42 @@ import { Separator } from "@/components/ui/separator";
 import pricingData from "@/lib/pricing.json";
 import Link from "next/link";
 
+function persistSelectedPlan(plan: string, billing: string) {
+  try {
+    const hasConsent =
+      typeof document !== "undefined" &&
+      document.cookie
+        .split(";")
+        .some((c) => c.trim().startsWith("cookie_consent="));
+    const payload = { plan, billing, savedAt: Date.now() };
+    if (hasConsent) {
+      const expires = new Date(Date.now() + 365 * 864e5).toUTCString();
+      document.cookie =
+        "selected_plan=" +
+        encodeURIComponent(JSON.stringify(payload)) +
+        "; expires=" +
+        expires +
+        "; path=/; Secure; SameSite=Lax";
+    } else {
+      localStorage.setItem("selected_plan", JSON.stringify(payload));
+    }
+  } catch (e) {
+    try {
+      const expires = new Date(Date.now() + 365 * 864e5).toUTCString();
+      document.cookie =
+        "selected_plan=" +
+        encodeURIComponent(
+          JSON.stringify({ plan, billing, savedAt: Date.now() })
+        ) +
+        "; expires=" +
+        expires +
+        "; path=/; Secure; SameSite=Lax";
+    } catch (err) {
+      console.error("Failed to persist selected plan", err);
+    }
+  }
+}
+
 type Plan = {
   id: string;
   name: string;
@@ -238,10 +274,16 @@ export default function PricingCards() {
                             <Button
                               variant={isRecommended ? "accent" : "default"}
                               asChild
+                              onClick={() =>
+                                persistSelectedPlan(
+                                  p.slug ?? p.id ?? p.name ?? "",
+                                  billing
+                                )
+                              }
                             >
                               <Link
                                 href={{
-                                  pathname: "/signup",
+                                  pathname: "/auth/signup",
                                   query: {
                                     plan: p.name ?? p.slug ?? p.id,
                                     billing,

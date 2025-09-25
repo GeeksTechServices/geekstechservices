@@ -83,7 +83,7 @@ export default function CTA() {
 
               <div className='mt-4 flex flex-col sm:flex-row items-center justify-center gap-3'>
                 <Link
-                  href={"/signup?trial=14"}
+                  href={"/auth/signup?trial=14"}
                   className='inline-block w-full sm:w-auto'
                 >
                   <Button

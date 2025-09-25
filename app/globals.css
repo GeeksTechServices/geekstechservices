@@ -258,3 +258,8 @@ html,
 body {
   height: 100%;
 }
+
+/* enable smooth in-page anchor scrolling */
+html {
+  scroll-behavior: smooth;
+}
