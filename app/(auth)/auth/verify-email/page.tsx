@@ -6,7 +6,7 @@ import { applyActionCode, checkActionCode } from "firebase/auth";
 import AuthShell from "@/components/auth/AuthShell";
 import { Button } from "@/components/ui/button";
 
-export default function VerifyEmailPage() {
+function VerifyEmailInner() {
   const params = useSearchParams();
   const router = useRouter();
   const [status, setStatus] = useState<
@@ -64,5 +64,23 @@ export default function VerifyEmailPage() {
         )}
       </div>
     </AuthShell>
+  );
+}
+
+function VerifyEmailFallback(): React.ReactElement {
+  return (
+    <div className='flex min-h-[60vh] items-center justify-center'>
+      <div className='text-sm text-muted-foreground animate-pulse'>
+        Verifying…
+      </div>
+    </div>
+  );
+}
+
+export default function VerifyEmailPage(): React.ReactElement {
+  return (
+    <React.Suspense fallback={<VerifyEmailFallback />}>
+      <VerifyEmailInner />
+    </React.Suspense>
   );
 }

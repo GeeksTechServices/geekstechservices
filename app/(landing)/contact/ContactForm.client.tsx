@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Turnstile from "@/app/(landing)/contact/Turnstile.client";
+import { Button } from "@/components/ui/button";
 
 const REQUEST_TEMPLATES: Record<string, { subject: string; message: string }> =
   {
@@ -109,12 +110,9 @@ export default function ContactForm() {
         </div>
 
         <div className='flex justify-end'>
-          <button
-            type='submit'
-            className='bg-[var(--accent)] px-4 py-2 rounded'
-          >
+          <Button type='submit' variant='default'>
             Send message
-          </button>
+          </Button>
         </div>
       </form>
     </div>

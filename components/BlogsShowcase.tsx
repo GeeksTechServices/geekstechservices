@@ -1,14 +1,16 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import blogsData from "@/lib/blogs.json";
+import blogsData from "@/lib/blog.json";
+import { formatDate } from "@/lib/blog-utils";
 import Link from "next/link";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 const PAGE_SIZE = 4;
 
 type BlogPost = {
-  id: string | number;
+  id?: string | number;
   slug: string;
   title: string;
   excerpt?: string;
@@ -16,6 +18,7 @@ type BlogPost = {
   image?: string;
   author?: string;
   date?: string;
+  readingTime?: string;
 };
 
 function getAllTags(posts: BlogPost[]) {
@@ -49,20 +52,26 @@ function shareUrl(platform: string, post: BlogPost) {
 }
 
 export default function BlogsShowcase() {
-  const posts: BlogPost[] = useMemo<BlogPost[]>(
-    () => (Array.isArray(blogsData) ? (blogsData as BlogPost[]) : []),
-    []
-  );
+  const posts: BlogPost[] = useMemo<BlogPost[]>(() => {
+    if (!Array.isArray(blogsData)) return [];
+    type Raw = Partial<BlogPost> & { slug: string; title: string } & Record<
+        string,
+        unknown
+      >;
+    return (blogsData as Raw[]).map((p, i) => ({ id: p.id ?? i, ...p }));
+  }, []);
   const tags = useMemo(() => getAllTags(posts), [posts]);
 
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const [page, setPage] = useState(1);
 
   const filtered = useMemo(() => {
-    if (!activeTag) return posts;
-    return posts.filter(
-      (p) => Array.isArray(p.tags) && p.tags.includes(activeTag)
-    );
+    const base = !activeTag
+      ? posts
+      : posts.filter(
+          (p) => Array.isArray(p.tags) && p.tags.includes(activeTag)
+        );
+    return base.slice().sort((a, b) => (a.date! < b.date! ? 1 : -1));
   }, [posts, activeTag]);
 
   const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
@@ -85,37 +94,44 @@ export default function BlogsShowcase() {
 
   return (
     <div>
-      <div className='flex items-center justify-between mb-6'>
+      <div className='flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4'>
+        <div>
+          <h1 className='text-2xl font-bold tracking-tight'>
+            Insights & Articles
+          </h1>
+          <p className='text-sm text-white/60 mt-1 max-w-xl'>
+            Deep dives, guides, and case studies on IoT reliability, telemetry,
+            and operational excellence.
+          </p>
+        </div>
         <div className='flex flex-wrap gap-2'>
-          <button
+          <Button
+            size='sm'
+            variant={!activeTag ? "default" : "ghost"}
             onClick={() => {
               setActiveTag(null);
               setPage(1);
             }}
-            className={`px-3 py-1 rounded-full text-sm ${
-              !activeTag ? "bg-[var(--accent)] text-black" : "bg-white/3"
-            }`}
           >
             All
-          </button>
+          </Button>
           {tags.map((t) => (
-            <button
+            <Button
               key={t}
+              size='sm'
+              variant={activeTag === t ? "default" : "ghost"}
               onClick={() => {
                 setActiveTag(t === activeTag ? null : t);
                 setPage(1);
               }}
-              className={`px-3 py-1 rounded-full text-sm ${
-                activeTag === t ? "bg-[var(--accent)] text-black" : "bg-white/3"
-              }`}
             >
               {t}
-            </button>
+            </Button>
           ))}
         </div>
 
-        <div className='text-sm text-white/60'>
-          Showing {filtered.length} posts
+        <div className='text-sm text-white/60 mt-2 md:mt-0'>
+          {filtered.length} post{filtered.length === 1 ? "" : "s"}
         </div>
       </div>
 
@@ -148,9 +164,21 @@ export default function BlogsShowcase() {
                   {p.excerpt && (
                     <p className='mt-1 text-sm text-white/70'>{p.excerpt}</p>
                   )}
-                  <div className='mt-2 text-xs text-white/50'>
-                    {p.author ? `By ${p.author} • ` : ""}
-                    {p.date}
+                  <div className='mt-2 text-xs text-white/50 flex flex-wrap gap-2 items-center'>
+                    {p.author && <span>By {p.author}</span>}
+                    {p.date && <span>• {formatDate(p.date)}</span>}
+                    {p.tags && (
+                      <span className='flex flex-wrap gap-1'>
+                        {p.tags.slice(0, 3).map((t) => (
+                          <span
+                            key={t}
+                            className='px-1.5 py-0.5 bg-white/5 rounded-md'
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -203,6 +231,11 @@ export default function BlogsShowcase() {
                       {r.title}
                     </Link>
                   ))}
+                  {relatedFor(p).length === 0 && (
+                    <span className='text-xs text-white/40'>
+                      No related posts
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
@@ -211,23 +244,25 @@ export default function BlogsShowcase() {
       </div>
 
       <div className='mt-8 flex items-center justify-center gap-3'>
-        <button
+        <Button
+          size='sm'
+          variant='ghost'
           onClick={() => setPage((s) => Math.max(1, s - 1))}
           disabled={page === 1}
-          className='px-3 py-1 rounded-md bg-white/6'
         >
           Prev
-        </button>
+        </Button>
         <div className='text-sm'>
           Page {page} of {pageCount}
         </div>
-        <button
+        <Button
+          size='sm'
+          variant='ghost'
           onClick={() => setPage((s) => Math.min(pageCount, s + 1))}
           disabled={page === pageCount}
-          className='px-3 py-1 rounded-md bg-white/6'
         >
           Next
-        </button>
+        </Button>
       </div>
     </div>
   );

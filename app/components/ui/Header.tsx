@@ -21,6 +21,7 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
+import Logo from "@/components/ui/Logo";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -64,8 +65,7 @@ export default function Header() {
     <header className='max-w-6xl mx-auto px-4 py-4 flex items-center justify-between'>
       <div className='flex items-center gap-3'>
         <Link href='/' className='flex items-center gap-3'>
-          <Image src='/file.svg' alt='logo' width={32} height={32} />
-          <span className='font-semibold'>GeekStechServices</span>
+          <Logo />
         </Link>
       </div>
 
@@ -265,9 +265,13 @@ export default function Header() {
           {user ? (
             <DropdownMenu>
               <div className='flex items-center gap-3'>
-                <span className='text-sm text-gray-200 mr-2'>
-                  {user.displayName || user.email}
-                </span>
+                <Button
+                  variant='ghost'
+                  className='hidden md:inline-flex'
+                  onClick={() => router.push("/dashboard")}
+                >
+                  Dashboard
+                </Button>
                 <DropdownMenuTrigger asChild>
                   <button
                     aria-label='Account'
@@ -288,12 +292,12 @@ export default function Header() {
 
               <DropdownMenuContent>
                 <DropdownMenuItem asChild>
-                  <Link href='/account/profile' className='block w-full'>
+                  <Link href='/dashboard/profile' className='block w-full'>
                     Profile
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href='/account/settings' className='block w-full'>
+                  <Link href='/dashboard/settings' className='block w-full'>
                     Settings
                   </Link>
                 </DropdownMenuItem>

@@ -28,7 +28,7 @@ function persistSelectedPlan(plan: string, billing: string) {
     } else {
       localStorage.setItem("selected_plan", JSON.stringify(payload));
     }
-  } catch (e) {
+  } catch {
     try {
       const expires = new Date(Date.now() + 365 * 864e5).toUTCString();
       document.cookie =

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import blogsData from "@/lib/blogs.json";
+import blogsData from "@/lib/blog.json";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
@@ -24,7 +24,7 @@ import {
 const PAGE_SIZE = 6;
 
 type BlogPost = {
-  id: string | number;
+  id?: string | number;
   title: string;
   excerpt: string;
   image: string;
@@ -54,12 +54,23 @@ export default function BlogsShowcase() {
   const [currentPage, setCurrentPage] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
 
-  const allTags = useMemo(() => getAllTags(blogsData), []);
+  interface RawPost extends Omit<BlogPost, "id"> {
+    id?: string | number;
+    [key: string]: unknown;
+  }
+  const normalized: BlogPost[] = useMemo(
+    () => (blogsData as RawPost[]).map((p, i) => ({ id: p.id ?? i, ...p })),
+    []
+  );
+  const allTags = useMemo(
+    () => getAllTags(normalized as BlogPost[]),
+    [normalized]
+  );
 
   const filteredPosts = useMemo(() => {
-    if (selectedTag === "all") return blogsData;
-    return blogsData.filter((post) => (post.tags || []).includes(selectedTag));
-  }, [selectedTag]);
+    if (selectedTag === "all") return normalized;
+    return normalized.filter((post) => (post.tags || []).includes(selectedTag));
+  }, [selectedTag, normalized]);
 
   const totalPages = Math.ceil(filteredPosts.length / PAGE_SIZE);
   const startIdx = (currentPage - 1) * PAGE_SIZE;
