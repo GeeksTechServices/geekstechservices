@@ -7,7 +7,7 @@ import AuthShell from "@/components/auth/AuthShell";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-export default function ConfirmResetPasswordPage() {
+function ConfirmResetPasswordInner() {
   const params = useSearchParams();
   const router = useRouter();
   const oobCode = params.get("oobCode");
@@ -129,5 +129,21 @@ export default function ConfirmResetPasswordPage() {
         )}
       </div>
     </AuthShell>
+  );
+}
+
+function ConfirmResetFallback(): React.ReactElement {
+  return (
+    <div className='flex min-h-[60vh] items-center justify-center'>
+      <div className='text-sm text-muted-foreground animate-pulse'>Loading…</div>
+    </div>
+  );
+}
+
+export default function ConfirmResetPasswordPage(): React.ReactElement {
+  return (
+    <React.Suspense fallback={<ConfirmResetFallback />}>
+      <ConfirmResetPasswordInner />
+    </React.Suspense>
   );
 }

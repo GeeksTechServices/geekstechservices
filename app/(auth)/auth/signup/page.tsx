@@ -23,7 +23,8 @@ import {
 import { buildEmailVerificationSettings } from "@/lib/firebaseActions";
 import { useToast } from "@/hooks/use-toast";
 
-export default function SignUpPage() {
+// Inner component that uses useSearchParams. Must be inside <Suspense>.
+function SignUpPageInner() {
   const router = useRouter();
   const params = useSearchParams();
   const trialParam = params?.get("trial");
@@ -66,33 +67,46 @@ export default function SignUpPage() {
       }
     } catch (e) {
       // ignore parse errors
+      console.warn("Failed to parse selected plan from storage", e);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // compute selected plan details (from query or persisted selection)
   const effectiveTarget = planParam ?? selectedPlan;
-  let selectedPlanData: any = null;
+  type Plan = {
+    id: string;
+    slug?: string;
+    name: string;
+    short_description?: string;
+    price_monthly?: number | null;
+    price_yearly?: number | null;
+    included_devices?: number | null;
+    trial_days?: number | null;
+  };
+  let selectedPlanData: Plan | undefined = undefined;
   let selectedPriceDisplay = "";
-  let effectiveBilling =
+  const effectiveBilling =
     (billingParam ?? selectedBilling) === "yearly" ? "yearly" : "monthly";
   try {
     if (effectiveTarget) {
-      const plans = Array.isArray((pricingData as any).plans)
-        ? (pricingData as any).plans
-        : [];
+      const pricing = pricingData as unknown as {
+        plans?: Plan[] | undefined;
+        currency?: string | undefined;
+      };
+      const plans = Array.isArray(pricing.plans) ? pricing.plans : [];
       selectedPlanData = plans.find(
-        (p: any) =>
+        (p: Plan) =>
           p.id === effectiveTarget ||
           p.slug === effectiveTarget ||
           p.name === effectiveTarget
       );
       if (selectedPlanData) {
-        const formatCurrency = (v: number | null) => {
-          if (v === null || typeof v !== "number") return "Contact sales";
+        const formatCurrency = (v: number | null | undefined) => {
+          if (v == null || typeof v !== "number") return "Contact sales";
           return new Intl.NumberFormat("en-US", {
             style: "currency",
-            currency: (pricingData as any).currency || "USD",
+            currency: pricing.currency || "USD",
             minimumFractionDigits: 0,
           }).format(v);
         };
@@ -103,7 +117,7 @@ export default function SignUpPage() {
       }
     }
   } catch (e) {
-    // ignore
+    console.error("Failed to parse pricing data", e);
   }
   const [trialAccepted, setTrialAccepted] = useState(false);
   const [trialSaving, setTrialSaving] = useState(false);
@@ -278,6 +292,10 @@ export default function SignUpPage() {
                               );
                             } catch (e) {
                               // fallback: set cookie anyway
+                              console.error(
+                                "Failed to save trial acceptance",
+                                e
+                              );
                               const expires = new Date(
                                 Date.now() + 365 * 864e5
                               ).toUTCString();
@@ -378,5 +396,25 @@ export default function SignUpPage() {
         </form>
       </div>
     </AuthShell>
+  );
+}
+
+// Lightweight fallback while search params resolve client-side.
+function SignUpFallback(): React.ReactElement {
+  return (
+    <div className='flex min-h-[60vh] items-center justify-center'>
+      <div className='text-sm text-muted-foreground animate-pulse'>
+        Loading signup…
+      </div>
+    </div>
+  );
+}
+
+// Default export: wrap inner component in Suspense to satisfy Next.js requirement for useSearchParams.
+export default function SignUpPage(): React.ReactElement {
+  return (
+    <React.Suspense fallback={<SignUpFallback />}>
+      <SignUpPageInner />
+    </React.Suspense>
   );
 }

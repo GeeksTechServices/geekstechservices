@@ -4,6 +4,7 @@ import React, { useMemo, useState } from "react";
 import blogsData from "@/lib/blogs.json";
 import Link from "next/link";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 const PAGE_SIZE = 4;
 
@@ -87,30 +88,28 @@ export default function BlogsShowcase() {
     <div>
       <div className='flex items-center justify-between mb-6'>
         <div className='flex flex-wrap gap-2'>
-          <button
+          <Button
+            size='sm'
+            variant={!activeTag ? "default" : "ghost"}
             onClick={() => {
               setActiveTag(null);
               setPage(1);
             }}
-            className={`px-3 py-1 rounded-full text-sm ${
-              !activeTag ? "bg-[var(--accent)] text-black" : "bg-white/3"
-            }`}
           >
             All
-          </button>
+          </Button>
           {tags.map((t) => (
-            <button
+            <Button
               key={t}
+              size='sm'
+              variant={activeTag === t ? "default" : "ghost"}
               onClick={() => {
                 setActiveTag(t === activeTag ? null : t);
                 setPage(1);
               }}
-              className={`px-3 py-1 rounded-full text-sm ${
-                activeTag === t ? "bg-[var(--accent)] text-black" : "bg-white/3"
-              }`}
             >
               {t}
-            </button>
+            </Button>
           ))}
         </div>
 
@@ -211,23 +210,25 @@ export default function BlogsShowcase() {
       </div>
 
       <div className='mt-8 flex items-center justify-center gap-3'>
-        <button
+        <Button
+          size='sm'
+          variant='ghost'
           onClick={() => setPage((s) => Math.max(1, s - 1))}
           disabled={page === 1}
-          className='px-3 py-1 rounded-md bg-white/6'
         >
           Prev
-        </button>
+        </Button>
         <div className='text-sm'>
           Page {page} of {pageCount}
         </div>
-        <button
+        <Button
+          size='sm'
+          variant='ghost'
           onClick={() => setPage((s) => Math.min(pageCount, s + 1))}
           disabled={page === pageCount}
-          className='px-3 py-1 rounded-md bg-white/6'
         >
           Next
-        </button>
+        </Button>
       </div>
     </div>
   );

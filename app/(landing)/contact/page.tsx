@@ -1,7 +1,8 @@
 import React from "react";
 import contactData from "@/lib/contact.json";
-import Turnstile from "@/app/(landing)/contact/Turnstile.client";
+// import Turnstile from "@/app/(landing)/contact/Turnstile.client";
 import ContactForm from "./ContactForm.client";
+import { Button } from "@/components/ui/button";
 
 export const metadata = {
   title: "Contact — GeekStechServices",
@@ -66,7 +67,6 @@ export default function ContactPage() {
                 <div className='bg-white/5 p-6 rounded-xl'>Loading form…</div>
               }
             >
-              {/* @ts-ignore Server/Client boundary — this import is client component */}
               <ContactForm />
             </React.Suspense>
           </div>
@@ -94,9 +94,7 @@ export default function ContactPage() {
                 in the right direction.
               </p>
               <div className='mt-4'>
-                <button className='bg-transparent border border-white/10 px-4 py-2 rounded'>
-                  Book a call
-                </button>
+                <Button variant='outline'>Book a call</Button>
               </div>
             </div>
           </div>

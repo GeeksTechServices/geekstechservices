@@ -1,0 +1,32 @@
+[
+  {
+    "time": "2025-09-24T14:12:03Z",
+    "level": "info",
+    "source": "ingest",
+    "message": "Received 120 events from device: device-12"
+  },
+  {
+    "time": "2025-09-24T14:11:12Z",
+    "level": "warn",
+    "source": "processor",
+    "message": "Processing delay > 200ms for batch 452"
+  },
+  {
+    "time": "2025-09-24T14:10:50Z",
+    "level": "error",
+    "source": "auth",
+    "message": "Failed token validation for user uid=abc123"
+  },
+  {
+    "time": "2025-09-24T14:09:25Z",
+    "level": "info",
+    "source": "billing",
+    "message": "Invoice 2025-09-01 paid: $49.00"
+  },
+  {
+    "time": "2025-09-24T13:58:01Z",
+    "level": "info",
+    "source": "deploy",
+    "message": "Deployment succeeded: marketing-site v1.4.2"
+  }
+]

@@ -1,8 +1,10 @@
 import React from "react";
 import type { Metadata } from "next";
 
+import DashboardClientWrapper from "@/components/dashboard/DashboardClientWrapper";
+
 export const metadata: Metadata = {
-  title: "Dashboard — GeekStechServices",
+  title: "Dashboard  GeekStechServices",
 };
 
 export default function DashboardLayout({
@@ -12,7 +14,7 @@ export default function DashboardLayout({
 }) {
   return (
     <div className='min-h-screen bg-[var(--bg-dark)] text-white'>
-      <main className='container mx-auto px-6 py-8'>{children}</main>
+      <DashboardClientWrapper>{children}</DashboardClientWrapper>
     </div>
   );
 }
