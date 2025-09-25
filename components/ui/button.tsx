@@ -43,6 +43,7 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
+  isLoading?: boolean;
 }
 
 type MotionButtonProps = HTMLMotionProps<"button">;
@@ -55,7 +56,18 @@ const MotionButton = React.forwardRef<HTMLButtonElement, MotionButtonProps>(
 MotionButton.displayName = "MotionButton";
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  (
+    {
+      className,
+      variant,
+      size,
+      asChild = false,
+      isLoading,
+      children,
+      ...props
+    },
+    ref
+  ) => {
     const classes = cn(buttonVariants({ variant, size, className }));
 
     if (asChild) {
@@ -65,7 +77,35 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           className={classes}
           ref={ref}
           {...(props as React.ComponentPropsWithoutRef<"button">)}
-        />
+        >
+          {isLoading ? (
+            <span className='inline-flex items-center gap-2'>
+              <svg
+                className='animate-spin h-4 w-4'
+                viewBox='0 0 24 24'
+                fill='none'
+                aria-hidden
+              >
+                <circle
+                  className='opacity-25'
+                  cx='12'
+                  cy='12'
+                  r='10'
+                  stroke='currentColor'
+                  strokeWidth='4'
+                />
+                <path
+                  className='opacity-75'
+                  fill='currentColor'
+                  d='M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z'
+                />
+              </svg>
+              <span className='sr-only'>Loading</span>
+            </span>
+          ) : (
+            children
+          )}
+        </Comp>
       );
     }
 
@@ -78,7 +118,35 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         whileTap={{ translateY: 0, scale: 0.98 }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
         {...(props as unknown as MotionButtonProps)}
-      />
+      >
+        {isLoading ? (
+          <span className='inline-flex items-center gap-2'>
+            <svg
+              className='animate-spin h-4 w-4'
+              viewBox='0 0 24 24'
+              fill='none'
+              aria-hidden
+            >
+              <circle
+                className='opacity-25'
+                cx='12'
+                cy='12'
+                r='10'
+                stroke='currentColor'
+                strokeWidth='4'
+              />
+              <path
+                className='opacity-75'
+                fill='currentColor'
+                d='M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z'
+              />
+            </svg>
+            <span className='sr-only'>Loading</span>
+          </span>
+        ) : (
+          children
+        )}
+      </MotionButton>
     );
   }
 );

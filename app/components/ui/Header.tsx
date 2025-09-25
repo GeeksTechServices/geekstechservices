@@ -88,17 +88,6 @@ export default function Header() {
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
                   <Link
-                    href='/blogs'
-                    className='px-3 py-2 text-sm text-gray-200 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]'
-                  >
-                    Blogs
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild>
-                  <Link
                     href='/about'
                     className='px-3 py-2 text-sm text-gray-200 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]'
                   >
@@ -117,7 +106,16 @@ export default function Header() {
                   </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
-
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild>
+                  <Link
+                    href='/blogs'
+                    className='px-3 py-2 text-sm text-gray-200 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]'
+                  >
+                    Blogs
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
                   <Link
@@ -181,15 +179,7 @@ export default function Header() {
                     Home
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    href='/blogs'
-                    onClick={() => setOpen(false)}
-                    className='block px-2 py-2 rounded hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]'
-                  >
-                    Blogs
-                  </Link>
-                </li>
+
                 <li>
                   <Link
                     href='/about'
@@ -206,6 +196,15 @@ export default function Header() {
                     className='block px-2 py-2 rounded hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]'
                   >
                     Pricing
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href='/blogs'
+                    onClick={() => setOpen(false)}
+                    className='block px-2 py-2 rounded hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]'
+                  >
+                    Blogs
                   </Link>
                 </li>
                 <li>

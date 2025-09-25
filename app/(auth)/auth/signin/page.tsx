@@ -6,8 +6,8 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
-import Logo from "@/components/ui/Logo";
-import Image from "next/image";
+import AuthShell from "@/components/auth/AuthShell";
+import SocialAuthButtons from "@/components/auth/SocialAuthButtons";
 import {
   getFirebaseAuth,
   googleProvider,
@@ -70,87 +70,66 @@ export default function SignInPage() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gradient-to-b from-black via-black/95 to-black text-white">
-      <div className="w-full max-w-3xl p-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-        <div className="hidden md:flex flex-col items-start justify-center p-8 bg-white/3 rounded-lg">
-          <Logo />
-          <h2 className="text-3xl font-extrabold mt-6">Welcome back</h2>
-          <p className="text-gray-300 mt-2">Sign in to manage your projects and access your dashboard.</p>
-          <div className="mt-6">
-            <Image
-              src="/globe.svg"
-              alt="illustration"
-              width={192}
-              height={192}
-              className="w-48 opacity-60"
-            />
-          </div>
+    <AuthShell
+      title='Welcome back'
+      subtitle='Sign in to access your IoT network health insights & predictive maintenance signals.'
+      side={<div className='flex flex-1 flex-col' />}
+      footer={
+        <p>
+          Don&apos;t have an account?{" "}
+          <Link href='/auth/signup' className='text-[var(--accent)]'>
+            Sign up
+          </Link>
+        </p>
+      }
+    >
+      <div className='space-y-4'>
+        <SocialAuthButtons
+          onGoogle={() => signInWithProvider(googleProvider)}
+          onGitHub={() => signInWithProvider(githubProvider)}
+          disabled={loading}
+        />
+        <div className='relative py-1 text-center text-xs uppercase tracking-wide text-gray-400'>
+          <span className='bg-[var(--bg-dark)] px-3'>or email</span>
+          <span className='absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-gradient-to-r from-transparent via-white/15 to-transparent' />
         </div>
-
-        <div className="p-8 bg-white/5 rounded-lg">
-          <div className="flex items-center justify-between mb-6">
-            <Logo compact />
-            <Link href="/auth/signup" className="text-sm text-[var(--accent)]">
-              Create account
-            </Link>
-          </div>
-
-          <div className="space-y-3 mb-4">
-            <Button
-              variant="outline"
-              size="default"
-              className="w-full"
-              onClick={() => signInWithProvider(googleProvider)}
-              disabled={loading}
-            >
-              Continue with Google
-            </Button>
-            <Button
-              variant="outline"
-              size="default"
-              className="w-full"
-              onClick={() => signInWithProvider(githubProvider)}
-              disabled={loading}
-            >
-              Continue with GitHub
-            </Button>
-          </div>
-
-          <div className="text-center text-sm text-gray-400 mb-4">Or use your email</div>
-          <form className="space-y-3" onSubmit={handleEmailSignIn}>
+        <form className='space-y-4' onSubmit={handleEmailSignIn}>
+          <div className='space-y-2'>
             <Input
-              name="email"
-              type="email"
-              placeholder="you@company.com"
+              name='email'
+              type='email'
+              placeholder='you@company.com'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <Input
-              name="password"
-              type="password"
-              placeholder="Password"
+              name='password'
+              type='password'
+              placeholder='Password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            {error && <div className="text-sm text-red-400">{error}</div>}
-            <div className="flex items-center justify-between">
-              <Link href="/auth/reset-password" className="text-sm text-[var(--accent)]">
-                Forgot password?
-              </Link>
-              <Button type="submit" disabled={loading}>
-                Sign in
-              </Button>
+          </div>
+          {error && (
+            <div className='rounded-md border border-red-500/30 bg-red-500/10 p-2 text-xs text-red-300'>
+              {error}
             </div>
-          </form>
-
-          <p className="text-sm text-gray-400 mt-4">
-            Don&apos;t have an account?{" "}
-            <Link href="/auth/signup" className="text-[var(--accent)]">
-              Sign up
+          )}
+          <div className='flex items-center justify-between text-sm'>
+            <Link href='/auth/reset-password' className='text-[var(--accent)]'>
+              Forgot password?
             </Link>
-          </p>
-        </div>
+            <Button
+              type='submit'
+              disabled={loading}
+              className='min-w-28'
+              isLoading={loading}
+            >
+              Sign in
+            </Button>
+          </div>
+        </form>
       </div>
-    </main>
+    </AuthShell>
   );
 }

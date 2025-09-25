@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import AuthShell from "@/components/auth/AuthShell";
+import { buildPasswordResetSettings } from "@/lib/firebaseActions";
 import { getFirebaseAuth } from "@/lib/firebaseClient";
 import { sendPasswordResetEmail } from "firebase/auth";
 
@@ -21,7 +23,13 @@ export default function ResetPasswordPage() {
     setMessage(null);
     setError(null);
     try {
-      await sendPasswordResetEmail(auth, email);
+      const origin =
+        typeof window !== "undefined" ? window.location.origin : "";
+      await sendPasswordResetEmail(
+        auth,
+        email,
+        buildPasswordResetSettings(origin)
+      );
       setMessage(
         "If an account exists for this email, a reset link has been sent."
       );
@@ -41,32 +49,43 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <main className='min-h-screen flex items-center justify-center bg-black/95 text-white'>
-      <div className='w-full max-w-md p-8 bg-white/5 rounded-lg'>
-        <h1 className='text-2xl font-bold mb-4'>Reset password</h1>
-        <p className='text-sm text-gray-400 mb-4'>
-          Enter your email and we&apos;ll send a link to reset your password.
-        </p>
-        <form className='space-y-3' onSubmit={handleReset}>
-          <Input
-            name='email'
-            type='email'
-            placeholder='you@company.com'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          {message && <div className='text-sm text-green-400'>{message}</div>}
-          {error && <div className='text-sm text-red-400'>{error}</div>}
-          <Button type='submit' disabled={loading}>
-            Send reset link
-          </Button>
-        </form>
-        <p className='text-sm text-gray-400 mt-4'>
-          <Link href='/auth/signin' className='text-[var(--accent)]'>
-            Back to sign in
-          </Link>
-        </p>
-      </div>
-    </main>
+    <AuthShell
+      title='Reset password'
+      subtitle='Enter your account email and we’ll send a secure link to choose a new password.'
+      narrow
+      footer={
+        <Link href='/auth/signin' className='text-[var(--accent)]'>
+          Back to sign in
+        </Link>
+      }
+    >
+      <form className='space-y-4' onSubmit={handleReset}>
+        <Input
+          name='email'
+          type='email'
+          placeholder='you@company.com'
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        {message && (
+          <div className='rounded-md border border-emerald-500/30 bg-emerald-500/10 p-2 text-xs text-emerald-300'>
+            {message}
+          </div>
+        )}
+        {error && (
+          <div className='rounded-md border border-red-500/30 bg-red-500/10 p-2 text-xs text-red-300'>
+            {error}
+          </div>
+        )}
+        <Button
+          type='submit'
+          disabled={loading}
+          className='w-full'
+          isLoading={loading}
+        >
+          Send reset link
+        </Button>
+      </form>
+    </AuthShell>
   );
 }

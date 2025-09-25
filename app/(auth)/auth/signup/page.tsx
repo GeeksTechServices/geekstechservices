@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import Logo from "@/components/ui/Logo";
-import Image from "next/image";
+import AuthShell from "@/components/auth/AuthShell";
+import SocialAuthButtons from "@/components/auth/SocialAuthButtons";
 import {
   getFirebaseAuth,
   googleProvider,
@@ -19,6 +19,7 @@ import {
   AuthProvider,
   updateProfile,
 } from "firebase/auth";
+import { buildEmailVerificationSettings } from "@/lib/firebaseActions";
 import { useToast } from "@/hooks/use-toast";
 
 export default function SignUpPage() {
@@ -67,7 +68,12 @@ export default function SignUpPage() {
           console.warn("Failed to set display name", upErr);
         }
       }
-      await sendEmailVerification(userCred.user);
+      const origin =
+        typeof window !== "undefined" ? window.location.origin : "";
+      await sendEmailVerification(
+        userCred.user,
+        buildEmailVerificationSettings(origin)
+      );
       toast({
         title: "Verify your email",
         description: `We've sent a verification link to ${email}. Please check your inbox to confirm your account.`,
@@ -87,79 +93,68 @@ export default function SignUpPage() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gradient-to-b from-black via-black/95 to-black text-white">
-      <div className="w-full max-w-3xl p-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-        <div className="hidden md:flex flex-col items-start justify-center p-8 bg-white/3 rounded-lg">
-          <Logo />
-          <h2 className="text-3xl font-extrabold mt-6">Create your account</h2>
-          <p className="text-gray-300 mt-2">Start collaborating, create projects, and get access to support.</p>
-          <div className="mt-6">
-            <Image src="/globe.svg" alt="illustration" width={192} height={192} className="w-48 opacity-60" />
-          </div>
+    <AuthShell
+      title='Create your account'
+      subtitle='Get predictive reliability, anomaly insights & consolidated health scoring for your IoT fleet.'
+      side={<div className='flex flex-1' />}
+      footer={
+        <p>
+          Already have an account?{" "}
+          <Link href='/auth/signin' className='text-[var(--accent)]'>
+            Sign in
+          </Link>
+        </p>
+      }
+    >
+      <div className='space-y-4'>
+        <SocialAuthButtons
+          onGoogle={() => handleOAuth(googleProvider)}
+          onGitHub={() => handleOAuth(githubProvider)}
+          disabled={loading}
+        />
+        <div className='relative py-1 text-center text-xs uppercase tracking-wide text-gray-400'>
+          <span className='bg-[var(--bg-dark)] px-3'>or email</span>
+          <span className='absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-gradient-to-r from-transparent via-white/15 to-transparent' />
         </div>
-
-        <div className="p-8 bg-white/5 rounded-lg">
-          <div className="flex items-center justify-between mb-6">
-            <Logo compact />
-            <Link href="/auth/signin" className="text-sm text-[var(--accent)]">
-              Sign in
-            </Link>
-          </div>
-
-          <div className="space-y-3 mb-4">
-            <Button
-              variant="outline"
-              className="w-full"
-              onClick={() => handleOAuth(googleProvider)}
-              disabled={loading}
-            >
-              Continue with Google
-            </Button>
-            <Button
-              variant="outline"
-              className="w-full"
-              onClick={() => handleOAuth(githubProvider)}
-              disabled={loading}
-            >
-              Continue with GitHub
-            </Button>
-          </div>
-
-          <form className="space-y-3" onSubmit={handleSignup}>
-            <Input
-              name="name"
-              placeholder="Full name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <Input
-              name="email"
-              type="email"
-              placeholder="you@company.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <Input
-              name="password"
-              type="password"
-              placeholder="Create a password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            {error && <div className="text-sm text-red-400">{error}</div>}
-            <Button type="submit" className="w-full" disabled={loading}>
-              Sign up
-            </Button>
-          </form>
-
-          <p className="text-sm text-gray-400 mt-4">
-            Already have an account?{" "}
-            <Link href="/auth/signin" className="text-[var(--accent)]">
-              Sign in
-            </Link>
-          </p>
-        </div>
+        <form className='space-y-4' onSubmit={handleSignup}>
+          <Input
+            name='name'
+            placeholder='Full name'
+            autoComplete='name'
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <Input
+            name='email'
+            type='email'
+            autoComplete='email'
+            placeholder='you@company.com'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input
+            name='password'
+            type='password'
+            autoComplete='new-password'
+            placeholder='Create a password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {error && (
+            <div className='rounded-md border border-red-500/30 bg-red-500/10 p-2 text-xs text-red-300'>
+              {error}
+            </div>
+          )}
+          <Button
+            type='submit'
+            className='w-full'
+            disabled={loading}
+            isLoading={loading}
+          >
+            Sign up
+          </Button>
+        </form>
       </div>
-    </main>
+    </AuthShell>
   );
 }

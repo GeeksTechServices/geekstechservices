@@ -1,6 +1,7 @@
 import React from "react";
 import contactData from "@/lib/contact.json";
 import Turnstile from "@/app/(landing)/contact/Turnstile.client";
+import ContactForm from "./ContactForm.client";
 
 export const metadata = {
   title: "Contact — GeekStechServices",
@@ -57,64 +58,17 @@ export default function ContactPage() {
           </div>
 
           <div>
-            <div className='bg-white/5 p-6 rounded-xl'>
-              <form
-                action='https://formspree.io/f/xwprkzgq'
-                method='POST'
-                className='space-y-4'
-              >
-                <input
-                  type='hidden'
-                  name='_subject'
-                  value='New contact from website'
-                />
-                <div>
-                  <label className='text-sm text-gray-300'>Name</label>
-                  <input
-                    name='name'
-                    required
-                    className='w-full bg-transparent border border-white/10 rounded px-3 py-2 mt-1'
-                  />
-                </div>
-                <div>
-                  <label className='text-sm text-gray-300'>Email</label>
-                  <input
-                    name='email'
-                    type='email'
-                    required
-                    className='w-full bg-transparent border border-white/10 rounded px-3 py-2 mt-1'
-                  />
-                </div>
-                <div>
-                  <label className='text-sm text-gray-300'>Message</label>
-                  <textarea
-                    name='message'
-                    rows={4}
-                    required
-                    className='w-full bg-transparent border border-white/10 rounded px-3 py-2 mt-1'
-                  />
-                </div>
-
-                <div className='mt-2'>
-                  {/* placeholder Turnstile widget - replace siteKey with env variable */}
-                  <Turnstile
-                    siteKey={
-                      process.env.NEXT_PUBLIC_TURNSTILE_SITEKEY ||
-                      "your-site-key"
-                    }
-                  />
-                </div>
-
-                <div className='flex justify-end'>
-                  <button
-                    type='submit'
-                    className='bg-[var(--accent)] px-4 py-2 rounded'
-                  >
-                    Send message
-                  </button>
-                </div>
-              </form>
-            </div>
+            {/* Client form handles prefill based on query params */}
+            {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+            {/* ContactForm.client is a client component that includes Turnstile */}
+            <React.Suspense
+              fallback={
+                <div className='bg-white/5 p-6 rounded-xl'>Loading form…</div>
+              }
+            >
+              {/* @ts-ignore Server/Client boundary — this import is client component */}
+              <ContactForm />
+            </React.Suspense>
           </div>
         </div>
 

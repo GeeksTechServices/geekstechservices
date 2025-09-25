@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { getFirebaseAuth } from "@/lib/firebaseClient";
 import { sendSignInLinkToEmail } from "firebase/auth";
+import AuthShell from "@/components/auth/AuthShell";
 
 export default function MagicLinkPage() {
   const [email, setEmail] = useState("");
@@ -43,27 +44,38 @@ export default function MagicLinkPage() {
   };
 
   return (
-    <main className='min-h-screen flex items-center justify-center bg-black/95 text-white'>
-      <div className='w-full max-w-md p-8 bg-white/5 rounded-lg text-center'>
-        <h1 className='text-2xl font-bold mb-4'>Sign in with Magic Link</h1>
-        <p className='text-sm text-gray-400 mb-6'>
-          Enter your email and we&apos;ll send a link to sign you in.
-        </p>
-        <form className='space-y-3' onSubmit={handleSend}>
-          <Input
-            name='email'
-            type='email'
-            placeholder='you@company.com'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          {message && <div className='text-sm text-green-400'>{message}</div>}
-          {error && <div className='text-sm text-red-400'>{error}</div>}
-          <Button type='submit' disabled={loading}>
-            Send magic link
-          </Button>
-        </form>
-      </div>
-    </main>
+    <AuthShell
+      title='Magic link sign-in'
+      subtitle='Passwordless entry. We’ll send a one-time link to your inbox.'
+      narrow
+    >
+      <form className='space-y-4 text-center' onSubmit={handleSend}>
+        <Input
+          name='email'
+          type='email'
+          placeholder='you@company.com'
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        {message && (
+          <div className='rounded-md border border-emerald-500/30 bg-emerald-500/10 p-2 text-xs text-emerald-300'>
+            {message}
+          </div>
+        )}
+        {error && (
+          <div className='rounded-md border border-red-500/30 bg-red-500/10 p-2 text-xs text-red-300'>
+            {error}
+          </div>
+        )}
+        <Button
+          type='submit'
+          disabled={loading}
+          className='w-full'
+          isLoading={loading}
+        >
+          Send magic link
+        </Button>
+      </form>
+    </AuthShell>
   );
 }
