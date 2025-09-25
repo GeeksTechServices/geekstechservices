@@ -5,6 +5,8 @@ import AnimatedCounter from "@/components/dashboard/AnimatedCounter.client";
 import GlowingButton from "@/components/dashboard/GlowingButton.client";
 import FloatingCard from "@/components/dashboard/FloatingCard.client";
 import ProjectsToolbar from "@/components/dashboard/ProjectsToolbar.client";
+import SmartProjectInsights from "@/components/dashboard/SmartProjectInsights.client";
+import ProjectRecommendationEngine from "@/components/dashboard/ProjectRecommendationEngine.client";
 // Button intentionally not needed at page-level (used inside client components)
 import {
   Card,
@@ -200,6 +202,8 @@ export default function ProjectsPage() {
             </CardContent>
           </Card>
 
+          <SmartProjectInsights />
+
           <Card>
             <CardHeader className='pb-3'>
               <CardTitle className='text-lg'>Quick Stats</CardTitle>
@@ -233,6 +237,11 @@ export default function ProjectsPage() {
             </CardContent>
           </Card>
         </div>
+      </div>
+
+      {/* AI Recommendations Section */}
+      <div className='mt-6'>
+        <ProjectRecommendationEngine />
       </div>
     </main>
   );

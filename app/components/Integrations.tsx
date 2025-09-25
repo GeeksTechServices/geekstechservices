@@ -180,13 +180,6 @@ export default function Integrations() {
               and alerts into the tools your teams already use.
             </p>
           </div>
-          <div>
-            <Link href='/integrations' className='text-sm'>
-              <Button variant='outline' size='sm'>
-                View all integrations
-              </Button>
-            </Link>
-          </div>
         </div>
         {/* Only trigger the staggered animation after the component mounts on the client
             to avoid server-rendered inline styles setting opacity:0 and causing invisible cards */}

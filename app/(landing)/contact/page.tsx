@@ -60,7 +60,6 @@ export default function ContactPage() {
 
           <div>
             {/* Client form handles prefill based on query params */}
-            {/* eslint-disable-next-line @next/next/no-sync-scripts */}
             {/* ContactForm.client is a client component that includes Turnstile */}
             <React.Suspense
               fallback={

@@ -9,7 +9,9 @@ import { Button } from "@/components/ui/button";
 function VerifyEmailInner() {
   const params = useSearchParams();
   const router = useRouter();
-  const [status, setStatus] = useState<"idle" | "verifying" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "verifying" | "success" | "error"
+  >("idle");
   const [message, setMessage] = useState<string>("");
   const oobCode = params.get("oobCode");
   const mode = params.get("mode");
@@ -68,7 +70,9 @@ function VerifyEmailInner() {
 function VerifyEmailFallback(): React.ReactElement {
   return (
     <div className='flex min-h-[60vh] items-center justify-center'>
-      <div className='text-sm text-muted-foreground animate-pulse'>Verifying…</div>
+      <div className='text-sm text-muted-foreground animate-pulse'>
+        Verifying…
+      </div>
     </div>
   );
 }

@@ -3,6 +3,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import ProjectAIAssistant from "./ProjectAIAssistant.client";
 
 export default function ProjectsToolbar(): React.ReactElement {
   const [query, setQuery] = React.useState("");
@@ -17,12 +18,22 @@ export default function ProjectsToolbar(): React.ReactElement {
           className='w-full'
           aria-label='Search projects'
         />
-        <Button size='sm' variant='ghost' onClick={() => setQuery("")}>Clear</Button>
+        <Button size='sm' variant='ghost' onClick={() => setQuery("")}>
+          Clear
+        </Button>
       </div>
 
       <div className='flex items-center gap-2'>
-        <Button size='sm' variant='outline'>Export</Button>
-        <Button size='sm' onClick={() => window.alert("Create project flow (stub)")}>New Project</Button>
+        <ProjectAIAssistant />
+        <Button size='sm' variant='outline'>
+          Export
+        </Button>
+        <Button
+          size='sm'
+          onClick={() => window.alert("Create project flow (stub)")}
+        >
+          New Project
+        </Button>
       </div>
     </div>
   );

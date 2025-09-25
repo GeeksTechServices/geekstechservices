@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import DashboardClientWrapper from "@/components/dashboard/DashboardClientWrapper";
 
 export const metadata: Metadata = {
-  title: "Dashboard  GeekStechServices",
+  title: "Dashboard - GeekStechServices",
 };
 
 export default function DashboardLayout({
