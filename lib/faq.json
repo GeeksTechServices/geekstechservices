@@ -2,25 +2,36 @@
   {
     "id": "faq-1",
     "category": "product",
-    "tags": ["health-score", "metric"],
     "question": "What is IoT Network Health?",
-    "answer": "IoT Network Health is a single metric that summarizes connectivity, latency, and device reliability across your fleet. It combines telemetry, anomaly detection, and historical trends into an easy-to-understand score.",
-    "updatedAt": "2025-09-22"
+    "answer": "IoT Network Health is a composite metric that summarizes connectivity, latency, packet loss, and device reliability across your fleet. It aggregates real-time telemetry with historical baselines, weights signals by importance (for example, control-plane vs telemetry traffic), and applies anomaly detection to surface trends. The resulting score is designed to be human-readable while remaining actionable — you can drill into contributing signals, view device-level diagnostics, and correlate incidents with recent configuration or firmware changes. Use cases include fleet-wide SLAs, alert prioritization, and capacity planning.",
+    "updatedAt": "2025-09-26"
   },
   {
     "id": "faq-2",
     "category": "ai",
-    "tags": ["recommendations", "ai"],
-    "question": "How does AI-driven recommendations work?",
-    "answer": "Our AI analyzes telemetry and logs to surface the most likely root causes and suggests step-by-step remediation. Recommendations can be applied automatically or reviewed by operators.",
-    "updatedAt": "2025-09-22"
+    "question": "How do AI-driven recommendations work?",
+    "answer": "Our recommendation engine ingests telemetry, logs, and event traces and applies a combination of statistical models and learned patterns to infer likely root causes. The pipeline includes feature extraction, causal scoring, and a ranked suggestion list with confidence scores. Recommendations are accompanied by a clear explanation of the evidence (for example: increased retransmits + gateway CPU spike → recommend gateway reboot and throttling). Operators can accept automated remediations, schedule them, or tune rules to reduce false positives. The system continuously learns from operator feedback, improving suggestion quality over time.",
+    "updatedAt": "2025-09-26"
   },
   {
     "id": "faq-3",
     "category": "integration",
-    "tags": ["api", "connectors"],
     "question": "Can I integrate with existing dashboards?",
-    "answer": "Yes — GeekStechServices supports webhooks, MQTT, REST APIs, and has prebuilt integrations with popular monitoring tools. Contact our team for enterprise connectors.",
-    "updatedAt": "2025-09-22"
+    "answer": "Yes — GeekStechServices provides flexible integration options: webhooks for event-driven notifications, MQTT and REST APIs for telemetry ingestion and control, and connectors for popular monitoring platforms (Grafana, Datadog, Splunk). You can export normalized metrics, alerts, and raw traces. Integrations support role-based access and API keys; for enterprise deployments we also provide secure tunnels and enterprise connectors that respect network policies and data residency requirements.",
+    "updatedAt": "2025-09-26"
+  },
+  {
+    "id": "faq-4",
+    "category": "security",
+    "question": "How secure is my data and what controls are available?",
+    "answer": "Security is a core part of our platform. Data in transit is encrypted with TLS, and sensitive fields may be encrypted at rest using customer-managed keys where required. Access is controlled via role-based access control (RBAC), single sign-on (SSO) integrations (SAML/OIDC), and audit logging. We support IP allowlists, API key scopes, and fine-grained permissions for operators. For customers with compliance needs, we offer SOC 2 and ISO-ready configurations and can assist with data residency, retention policies, and contractual safeguards.",
+    "updatedAt": "2025-09-26"
+  },
+  {
+    "id": "faq-5",
+    "category": "deployment",
+    "question": "Can I self-host the platform or run it in a hybrid model?",
+    "answer": "We offer flexible deployment models. Our managed SaaS is the fastest way to get started, but for customers who require on-premises or air-gapped environments we provide a self-hosted distribution and deployment diagrams. Hybrid options allow local ingestion and processing at the edge with selective forwarding to a managed control plane. Self-hosting requires container orchestration (Kubernetes), persistent storage, and network configuration; we provide deployment manifests, monitoring playbooks, and optional professional services to support rollout and ongoing operations.",
+    "updatedAt": "2025-09-26"
   }
 ]

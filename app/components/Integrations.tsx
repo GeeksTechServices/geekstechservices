@@ -9,17 +9,13 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import integrations from "../../lib/integrations.json";
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import IntegrationModal from "@/app/components/IntegrationModal";
+import Image from "next/image";
 
 function ClientAnimatedGrid() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-
   const gridClass = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6";
 
   const container = {
@@ -32,51 +28,6 @@ function ClientAnimatedGrid() {
     show: { y: 0, opacity: 1, transition: { duration: 0.36, ease: "easeOut" } },
   } as const;
 
-  if (!mounted) {
-    // server-render: render a static, visible grid so SSR and client markup match
-    return (
-      <div className={gridClass}>
-        {integrations.map((it) => (
-          <div key={it.name}>
-            <Card className='glass-strong card-elevated bg-[rgba(255,255,255,0.02)] backdrop-blur-sm border border-[var(--accent)]/12 text-white'>
-              <CardHeader>
-                <div className='flex items-center justify-between'>
-                  <div className='flex items-center gap-3'>
-                    <Avatar className='bg-transparent'>
-                      <AvatarImage src={it.logo} alt={`${it.name} logo`} />
-                    </Avatar>
-                    <div>
-                      <CardTitle>{it.name}</CardTitle>
-                      <CardDescription className='text-xs'>
-                        {it.category}
-                      </CardDescription>
-                    </div>
-                  </div>
-                  <div />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className='text-sm text-white/80'>{it.description}</p>
-              </CardContent>
-              <CardFooter className='flex items-center justify-between'>
-                <div className='text-xs text-white/70'>Docs available</div>
-                <div className='flex items-center gap-2'>
-                  <IntegrationModal integration={it} />
-                  <a href={it.href} target='_blank' rel='noreferrer'>
-                    <Button variant='default' size='sm'>
-                      Connect
-                    </Button>
-                  </a>
-                </div>
-              </CardFooter>
-            </Card>
-          </div>
-        ))}
-      </div>
-    );
-  }
-
-  // client-render: enable motion with stagger
   return (
     <motion.div
       className={gridClass}
@@ -89,16 +40,20 @@ function ClientAnimatedGrid() {
           <Card className='glass-strong card-elevated bg-[rgba(255,255,255,0.02)] backdrop-blur-sm border border-[var(--accent)]/12 text-white hover:shadow-[0_8px_30px_rgba(179,45,255,0.08)] hover:-translate-y-1 transition-transform'>
             <CardHeader>
               <div className='flex items-center justify-between'>
-                <div className='flex items-center gap-3'>
-                  <Avatar className='bg-transparent'>
-                    <AvatarImage src={it.logo} alt={`${it.name} logo`} />
-                  </Avatar>
-                  <div>
-                    <CardTitle>{it.name}</CardTitle>
-                    <CardDescription className='text-xs'>
-                      {it.category}
-                    </CardDescription>
-                  </div>
+                <div
+                  className={`flex items-center justify-center gap-3 ${
+                    it.name === "Scaleway" || it.name === "Grafana"
+                      ? "bg-black"
+                      : "bg-white"
+                  } p-2 rounded-lg`}
+                >
+                  <Image
+                    src={it.logo}
+                    alt={`${it.name} logo`}
+                    width={32}
+                    height={32}
+                    className='h-8 w-auto'
+                  />
                 </div>
                 <div>
                   <Link href={it.docs} target='_blank'>
@@ -140,6 +95,12 @@ function ClientAnimatedGrid() {
                     </Button>
                   </Link>
                 </div>
+              </div>
+              <div className='pt-5'>
+                <CardTitle>{it.name}</CardTitle>
+                <CardDescription className='text-xs'>
+                  {it.category}
+                </CardDescription>
               </div>
             </CardHeader>
             <CardContent>

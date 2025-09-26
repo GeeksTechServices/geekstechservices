@@ -8,6 +8,7 @@ import AuthShell from "@/components/auth/AuthShell";
 import { buildPasswordResetSettings } from "@/lib/firebaseActions";
 import { getFirebaseAuth } from "@/lib/firebaseClient";
 import { sendPasswordResetEmail } from "firebase/auth";
+import { useToast } from "@/hooks/use-toast";
 
 export default function ResetPasswordPage() {
   const [email, setEmail] = useState("");
@@ -16,6 +17,7 @@ export default function ResetPasswordPage() {
   const [error, setError] = useState<string | null>(null);
 
   const auth = getFirebaseAuth();
+  const { toast } = useToast();
 
   const handleReset = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,6 +27,13 @@ export default function ResetPasswordPage() {
     try {
       const origin =
         typeof window !== "undefined" ? window.location.origin : "";
+      // Debug: surface the origin used to build the action link so we can confirm
+      // whether Firebase receives the intended domain.
+      console.debug("Password reset origin:", origin);
+      toast({
+        title: "Sending reset link",
+        description: `Using origin: ${origin}`,
+      });
       await sendPasswordResetEmail(
         auth,
         email,

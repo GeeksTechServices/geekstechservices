@@ -21,7 +21,7 @@ export default function MagicLinkPage() {
     setError(null);
     try {
       const actionCodeSettings = {
-        url: window.location.origin + "/auth/magic-link/complete",
+        url: window.location.origin + "/auth/action",
         handleCodeInApp: true,
       };
       await sendSignInLinkToEmail(auth, email, actionCodeSettings);

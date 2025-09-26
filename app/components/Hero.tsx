@@ -4,6 +4,7 @@ import { motion, type Variants, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import { LuArrowRight, LuPlayCircle, LuSparkles } from "react-icons/lu";
 
 const container = {
   hidden: { opacity: 0, y: 24 },
@@ -44,15 +45,60 @@ export default function Hero() {
           aria-hidden
           className='absolute inset-0 -z-10 bg-gradient-to-br from-[#07070a] via-[rgba(179,45,255,0.08)] to-transparent'
         />
+        {/* Floating accent orbs */}
+        {!shouldReduce && (
+          <>
+            <motion.div
+              aria-hidden
+              className='absolute -z-10 top-[-40px] right-[-60px] h-48 w-48 rounded-full blur-3xl opacity-40'
+              style={{
+                background:
+                  "radial-gradient(circle at 30% 30%, rgba(179,45,255,0.35), transparent 50%)",
+              }}
+              animate={{ y: [0, 10, 0], x: [0, -6, 0] }}
+              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              aria-hidden
+              className='absolute -z-10 bottom-[-50px] left-[-50px] h-56 w-56 rounded-full blur-3xl opacity-30'
+              style={{
+                background:
+                  "radial-gradient(circle at 70% 70%, rgba(88,101,242,0.3), transparent 55%)",
+              }}
+              animate={{ y: [0, -8, 0], x: [0, 8, 0] }}
+              transition={{
+                duration: 8.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+          </>
+        )}
 
-        <div className='flex flex-col-reverse md:flex-row items-center gap-10 py-16 md:py-28'>
+        <div className='flex flex-col md:flex-row items-center gap-10 py-16 md:py-28'>
           <motion.div
             variants={item}
             custom={shouldReduce}
             className='flex-1 text-center md:text-left'
           >
-            <h1 className='text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight text-white'>
-              GeekStechServices — AI-powered IoT Network Health
+            {/* Eyebrow badge */}
+            <div className='flex items-center justify-center md:justify-start'>
+              <Link
+                href='/features'
+                className='inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-gray-200 hover:bg-white/10 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]'
+              >
+                <LuSparkles
+                  className='h-3.5 w-3.5 text-[var(--accent)]'
+                  aria-hidden='true'
+                />
+                Introducing our AI-powered IoT insights
+              </Link>
+            </div>
+            <h1 className='text-3xl sm:text-5xl lg:text-6xl font-extrabold leading-tight text-white'>
+              GeekStechServices
+              <span className='ml-2 bg-gradient-to-r from-[#b32dff] via-fuchsia-400 to-[#b32dff] bg-clip-text text-transparent'>
+                AI-powered IoT Network Health
+              </span>
             </h1>
             <p className='mt-4 text-lg sm:text-xl text-gray-200 max-w-2xl'>
               Intelligent monitoring and management for smart offices and
@@ -62,20 +108,42 @@ export default function Hero() {
             </p>
 
             <div className='mt-8 flex flex-col sm:flex-row gap-3 items-center justify-center md:justify-start'>
-              <Link href='#' className='w-full sm:w-auto'>
-                <Button className='w-full sm:w-auto'>Get started</Button>
-              </Link>
+              <motion.div
+                whileHover={shouldReduce ? undefined : { y: -2 }}
+                whileTap={shouldReduce ? undefined : { scale: 0.98 }}
+              >
+                <Link href='/auth/signup' className='w-full sm:w-auto'>
+                  <Button className='w-full sm:w-auto inline-flex items-center gap-2'>
+                    Get started
+                    <LuArrowRight className='h-4 w-4' aria-hidden='true' />
+                  </Button>
+                </Link>
+              </motion.div>
 
-              <Link href='#' className='w-full sm:w-auto'>
-                <Button variant='ghost' className='w-full sm:w-auto'>
-                  Request demo
-                </Button>
-              </Link>
+              <motion.div
+                whileHover={shouldReduce ? undefined : { y: -2 }}
+                whileTap={shouldReduce ? undefined : { scale: 0.98 }}
+              >
+                <Link href='/contact?request=demo' className='w-full sm:w-auto'>
+                  <Button
+                    variant='ghost'
+                    className='w-full sm:w-auto inline-flex items-center gap-2'
+                  >
+                    <LuPlayCircle className='h-4 w-4' aria-hidden='true' />
+                    Request demo
+                  </Button>
+                </Link>
+              </motion.div>
             </div>
 
-            <div className='mt-6 text-sm text-gray-300'>
-              Enterprise-ready • Secure • Scalable
-            </div>
+            <motion.div
+              className='mt-6 text-sm text-gray-300'
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: shouldReduce ? 0.2 : 0.35 }}
+            >
+              Enterprise-ready • Secure • Scalable — No credit card required
+            </motion.div>
           </motion.div>
 
           {/* Visual: glass card with IoT Network Health score and animated dots */}
