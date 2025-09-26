@@ -128,6 +128,7 @@ export default function ClientFeatures(): JSX.Element {
   const [range, setRange] = useState<"1M" | "3M" | "6M" | "1Y">("3M");
   const [chartLoading, setChartLoading] = useState(true);
   const [showError, setShowError] = useState<boolean>(true);
+  const [query, setQuery] = useState<string>("");
 
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 700);
@@ -237,8 +238,8 @@ export default function ClientFeatures(): JSX.Element {
   return (
     <main className='min-h-screen pb-24'>
       <div className='max-w-7xl mx-auto px-6 pt-14'>
-        <div className='mb-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start'>
-          <div className='lg:col-span-7'>
+        <div className='mb-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start'>
+          <div className='lg:col-span-7 min-h-[400px] flex flex-col justify-center'>
             <h1 className='text-4xl sm:text-5xl font-extrabold tracking-tight'>
               Features
             </h1>
@@ -248,21 +249,42 @@ export default function ClientFeatures(): JSX.Element {
               single pane.
             </p>
 
-            <div className='mt-6 flex flex-wrap gap-3 items-center'>
-              <Button variant='default'>Get started</Button>
-              <Link
-                href='/contact'
-                className='text-sm text-white/70 hover:underline'
-              >
-                Contact sales
-              </Link>
-              <span className='ml-4 text-xs text-white/60'>
+            <div className='mt-6 flex flex-col sm:flex-row sm:items-center sm:gap-4 gap-3'>
+              <Button asChild variant='default'>
+                <Link href='/auth/signup'>Get started</Link>
+              </Button>
+
+              <div className='flex items-center gap-3'>
+                <Link
+                  href='/contact'
+                  className='text-sm text-white/70 hover:underline'
+                >
+                  Contact sales
+                </Link>
+              </div>
+
+              <span className='ml-auto sm:ml-0 text-xs text-white/60'>
                 Trusted by operators worldwide
               </span>
             </div>
+
+            {/* Search / filter features */}
+            <div className='mt-8'>
+              <label htmlFor='features-search' className='sr-only'>
+                Search features
+              </label>
+              <input
+                id='features-search'
+                type='search'
+                placeholder='Search features (e.g. alerts, analytics, reports)'
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className='w-full sm:w-80 bg-white/5 focus:bg-white/6 focus:ring-1 focus:ring-[var(--accent)] rounded-full px-4 py-2 text-sm placeholder:text-white/50 transition'
+              />
+            </div>
           </div>
 
-          <aside className='lg:col-span-5'>
+          <aside className='lg:col-span-5 min-h-[400px] flex flex-col justify-center'>
             <Card className='p-6 rounded-3xl'>
               <h4 className='font-semibold text-lg'>
                 Why choose our dashboard?
@@ -279,7 +301,7 @@ export default function ClientFeatures(): JSX.Element {
               </ul>
             </Card>
           </aside>
-          <Card className='mt-8 col-span-full p-6 lg:p-8 rounded-3xl'>
+          <Card className='mt-12 col-span-full p-6 lg:p-8 rounded-3xl'>
             <div className='flex flex-col lg:flex-row lg:items-start gap-6'>
               <div className='flex-1'>
                 <h3 className='text-lg font-semibold'>Live overview</h3>
@@ -368,7 +390,7 @@ export default function ClientFeatures(): JSX.Element {
             initial='hidden'
             animate='show'
             variants={container}
-            className='grid grid-cols-1 md:grid-cols-2 gap-6'
+            className='grid grid-cols-1 md:grid-cols-2 gap-8'
           >
             {loading
               ? Array.from({ length: 4 }).map((_, i) => (
@@ -376,39 +398,49 @@ export default function ClientFeatures(): JSX.Element {
                     <SkeletonCard />
                   </div>
                 ))
-              : benefits.map((b) => {
-                  const Icon: IconType =
-                    (icons as unknown as Record<string, IconType>)[b.icon] ||
-                    (icons as unknown as Record<string, IconType>).MdInfo;
-                  return (
-                    <motion.div key={b.title} variants={item} className='mb-0'>
-                      <Card className='p-5 glass-faint transition-transform transform-gpu hover:-translate-y-1 hover:shadow-md border-l-2 border-transparent hover:border-[rgba(179,45,255,0.12)]'>
-                        <div className='flex items-start gap-3'>
-                          <div className='flex h-12 w-12 items-center justify-center rounded-md bg-gradient-to-br from-[rgba(179,45,255,0.06)] to-transparent'>
-                            <Icon className='text-2xl text-[var(--accent)]' />
-                          </div>
+              : benefits
+                  .filter(
+                    (b) =>
+                      b.title.toLowerCase().includes(query.toLowerCase()) ||
+                      b.description.toLowerCase().includes(query.toLowerCase())
+                  )
+                  .map((b) => {
+                    const Icon: IconType =
+                      (icons as unknown as Record<string, IconType>)[b.icon] ||
+                      (icons as unknown as Record<string, IconType>).MdInfo;
+                    return (
+                      <motion.div
+                        key={b.title}
+                        variants={item}
+                        className='mb-4'
+                      >
+                        <Card className='p-5 glass-faint transition-transform transform-gpu hover:-translate-y-1 hover:shadow-md border-l-2 border-transparent hover:border-[rgba(179,45,255,0.12)]'>
+                          <div className='flex items-start gap-3'>
+                            <div className='flex h-12 w-12 items-center justify-center rounded-md bg-gradient-to-br from-[rgba(179,45,255,0.06)] to-transparent'>
+                              <Icon className='text-2xl text-[var(--accent)]' />
+                            </div>
 
-                          <div className='flex-1'>
-                            <div className='text-lg font-semibold'>
-                              {b.title}
-                            </div>
-                            <div className='mt-2 text-sm text-white/80'>
-                              {b.description}
-                            </div>
-                            <div className='mt-3'>
-                              <Link
-                                href={`/features/details#${slugify(b.title)}`}
-                                className='text-[var(--accent)] text-sm hover:underline'
-                              >
-                                Learn more →
-                              </Link>
+                            <div className='flex-1'>
+                              <div className='text-lg font-semibold'>
+                                {b.title}
+                              </div>
+                              <div className='mt-2 text-sm text-white/80'>
+                                {b.description}
+                              </div>
+                              <div className='mt-3'>
+                                <Link
+                                  href={`/features/details#${slugify(b.title)}`}
+                                  className='text-[var(--accent)] text-sm hover:underline'
+                                >
+                                  Learn more →
+                                </Link>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </Card>
-                    </motion.div>
-                  );
-                })}
+                        </Card>
+                      </motion.div>
+                    );
+                  })}
           </motion.div>
         </section>
 

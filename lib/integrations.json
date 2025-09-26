@@ -1,7 +1,7 @@
 [
   {
     "name": "Datadog",
-    "logo": "/vercel.svg",
+    "logo": "/integrations/datadog.svg",
     "href": "https://www.datadoghq.com",
     "category": "Monitoring",
     "description": "Stream telemetry to Datadog and correlate device health with your observability layer.",
@@ -9,7 +9,7 @@
   },
   {
     "name": "Grafana",
-    "logo": "/window.svg",
+    "logo": "/integrations/grafana.svg",
     "href": "https://grafana.com",
     "category": "Dashboards",
     "description": "Visualize IoT metrics and health scores using prebuilt Grafana dashboards.",
@@ -17,7 +17,7 @@
   },
   {
     "name": "Scaleway",
-    "logo": "/globe.svg",
+    "logo": "https://www.scaleway.com/_next/static/media/logo.7e2996cb.svg",
     "href": "https://www.scaleway.com",
     "category": "Cloud",
     "description": "European-focused cloud & edge provider for privacy-aware deployments, VMs, and lightweight serverless workloads.",
@@ -25,7 +25,7 @@
   },
   {
     "name": "PagerDuty",
-    "logo": "/file.svg",
+    "logo": "https://cdn.cookielaw.org/logos/fa83fb26-2dfd-4489-bdea-8eab9e574978/a1edb0b6-6849-490c-ad11-02532d0269a7/94eec50b-96b3-456a-887b-71074d2aaea4/pd.png",
     "href": "https://pagerduty.com",
     "category": "Incident Response",
     "description": "Forward high-priority alerts to your on-call rotation for faster response.",
@@ -33,7 +33,7 @@
   },
   {
     "name": "Stripe",
-    "logo": "/next.svg",
+    "logo": "/integrations/stripe.svg",
     "href": "https://stripe.com",
     "category": "Billing",
     "description": "Handle billing, metering and subscription billing for device fleets and teams.",

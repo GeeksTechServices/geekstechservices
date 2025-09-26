@@ -102,7 +102,7 @@ export default function ContactPage() {
         {/* Optional team or FAQ section - quick suggestions */}
         <div className='mt-20'>
           <h3 className='text-2xl font-bold mb-6'>Meet the team</h3>
-          <div className='grid grid-cols-1 sm:grid-cols-3 gap-6'>
+          <div className='grid grid-cols-1 sm:grid-cols-3 gap-6 place-items-center'>
             <div className='p-4 bg-white/5 rounded-lg'>
               <div className='h-24 w-24 rounded-full bg-gray-700 mb-4' />
               <div className='font-medium'>Alex Morgan</div>

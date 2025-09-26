@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { IconType } from "react-icons";
 import * as RiIcons from "react-icons/ri";
 import * as FaIcons from "react-icons/fa";
+import { Input } from "@/components/ui/input";
 
 type FooterColumn = {
   title: string;
@@ -113,14 +114,14 @@ export default function Footer() {
               ) : (
                 <div>
                   <div className='flex items-center gap-2'>
-                    <input
+                    <Input
                       type='email'
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder='Email address'
-                      className='bg-white/3 placeholder-white/60 rounded-md px-3 py-2 text-sm flex-1'
                       aria-label='Email address'
                       disabled={submitting}
+                      id='footer-email'
                     />
                     <button
                       className='px-3 py-2 rounded-md bg-[var(--accent)] text-black text-sm disabled:opacity-60'
