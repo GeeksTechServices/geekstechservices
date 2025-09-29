@@ -94,7 +94,7 @@ export default async function BlogPostPage({
           </div>
         </header>
 
-        <div className='relative w-full h-72 overflow-hidden rounded-lg'>
+        <div className='relative w-full h-[400px] overflow-hidden rounded-lg'>
           {post.image && (
             <Image
               src={post.image}

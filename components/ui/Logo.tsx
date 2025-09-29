@@ -6,12 +6,12 @@ export default function Logo({ compact = false }: { compact?: boolean }) {
   const [src, setSrc] = useState<string | null>(null);
 
   useEffect(() => {
-    setSrc("/logo.webp");
+    setSrc("/images/logo.webp");
   }, []);
 
   const handleImgError = () => {
-    if (src === "/logo.webp") {
-      setSrc("/logo.png"); // try png if webp fails
+    if (src === "/images/logo.webp") {
+      setSrc("/images/logo.png"); // try png if webp fails
     } else {
       setSrc(null); // both failed -> show text fallback
     }
@@ -19,14 +19,14 @@ export default function Logo({ compact = false }: { compact?: boolean }) {
   // If image is available (client-side), show only the rectangular logo.
   if (src) {
     return (
-      <div className={`object-contain ${compact ? "h-7" : "h-9"}`}>
+      <div className={`object-cover ${compact ? "h-7" : "h-20"}`}>
         <Image
           src={src}
           alt='GeekStechServices logo'
           onError={handleImgError}
           // set explicit dimensions for Image optimization; adjust as needed
-          width={compact ? 28 : 36}
-          height={compact ? 28 : 36}
+          width={compact ? 140 : 175}
+          height={compact ? 28 : 80}
           priority
           className='block'
         />

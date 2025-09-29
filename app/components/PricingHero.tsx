@@ -69,18 +69,23 @@ export default function PricingHero() {
               </div>
 
               <div className='w-full md:w-1/2 flex justify-center md:justify-end'>
-                <motion.div
-                  whileHover={{ y: -8, rotate: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                  className='relative w-64 h-64 md:w-80 md:h-80'
-                >
-                  <Image
-                    src='/placeholder.svg'
-                    alt='IoT globe'
-                    fill
-                    className='object-contain'
-                  />
-                </motion.div>
+                {/* Outer container stays fixed; inner element (image) scales on hover */}
+                <div className='relative w-72 h-64 md:w-96 md:h-80 overflow-hidden rounded-xl shadow-xl'>
+                  <motion.div
+                    className='absolute inset-0'
+                    whileHover={{ scale: 1.06 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ duration: 0.35 }}
+                    style={{ transformOrigin: "50% 50%" }}
+                  >
+                    <Image
+                      src='/images/pricing.webp'
+                      alt='IoT globe'
+                      fill
+                      className='object-cover'
+                    />
+                  </motion.div>
+                </div>
               </div>
             </div>
           </Card>
