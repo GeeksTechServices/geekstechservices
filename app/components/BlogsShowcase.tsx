@@ -102,11 +102,12 @@ export default function BlogsShowcase() {
             className='text-center space-y-6'
           >
             <h1 className='text-6xl font-bold bg-gradient-to-r from-white via-[var(--accent)] to-white bg-clip-text text-transparent'>
-              Latest Insights
+              Insights & Innovations in IoT and AI
             </h1>
             <p className='text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed'>
-              Explore cutting-edge perspectives on IoT, operations, and
-              technology solutions that drive business transformation.
+              Explore the latest trends, expert guides, and actionable
+              strategies to monitor, optimize, and future-proof your smart
+              networks
             </p>
           </motion.div>
         </div>

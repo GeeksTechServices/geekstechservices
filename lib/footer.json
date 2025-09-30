@@ -1,5 +1,5 @@
 {
-  "elevatorPitch": "We design and build reliable, secure IoT systems with AI-driven monitoring and expert engineering.",
+  "elevatorPitch": "Simplify device monitoring, predict problems early, and maintain peak performance across your IoT network.",
   "columns": [
     {
       "title": "Product",
@@ -26,21 +26,36 @@
   ],
   "social": [
     {
-      "name": "Twitter",
-      "href": "https://twitter.com/geekstech",
-      "type": "svg",
+      "name": "Facebook",
+      "href": "https://www.facebook.com/geekstechservices/",
+      "type": "react",
+      "icon": "FaFacebook"
+    },
+    {
+      "name": "TwitterX",
+      "href": "https://x.com/geek_stech",
+      "type": "react",
+      "icon": "RiTwitterXFill",
       "svg": "<svg viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M8 19c7.333 0 11.333-6.333 11.333-11.833v-.54A8.1 8.1 0 0021 4.6a8.1 8.1 0 01-2.333.636A4.07 4.07 0 0020.333 3a8.14 8.14 0 01-2.583.98A4.06 4.06 0 0014.5 2c-2.333 0-4.166 1.943-4.166 4.333 0 .34.04.67.113.98A11.543 11.543 0 013 3.333a4.548 4.548 0 00-.563 2.177c0 1.504.773 2.833 1.948 3.61A4.053 4.053 0 012.8 9.7v.05c0 2.094 1.46 3.835 3.397 4.243-.374.1-.79.154-1.21.154-.294 0-.58-.03-.86-.084.583 1.844 2.277 3.187 4.277 3.223A8.15 8.15 0 013 18.5a11.5 11.5 0 006.25 1.78\" stroke=\"currentColor\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>"
     },
     {
-      "name": "GitHub",
-      "href": "https://github.com/GeeksTechServices/geekstechservices",
+      "name": "Pinterest",
+      "href": "https://www.pinterest.com/geek_stech/",
       "type": "react",
-      "icon": "FaGithub"
+      "icon": "FaPinterest"
+    },
+
+    {
+      "name": "YouTube",
+      "href": "hhttps://www.youtube.com/@Geek_Stech",
+      "type": "react",
+      "icon": "FaYoutube"
     },
     {
       "name": "LinkedIn",
-      "href": "https://www.linkedin.com/company/geekstech",
-      "type": "svg",
+      "href": "https://www.linkedin.com/company/geek-stech/",
+      "type": "react",
+      "icon": "FaLinkedin",
       "svg": "<svg viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M4.98 3.5C4.98 4.88 3.9 6 2.5 6S0 4.88 0 3.5 1.08 1 2.48 1s2.5 1.12 2.5 2.5zM.4 8.98h4.16V24H.4V8.98zM7.5 8.98h3.98v2.1h.06c.55-1.04 1.9-2.13 3.92-2.13 4.19 0 4.96 2.76 4.96 6.35V24h-4.16v-7.12c0-1.7-.03-3.9-2.38-3.9-2.38 0-2.74 1.86-2.74 3.78V24H7.5V8.98z\" stroke=\"currentColor\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>"
     }
   ],

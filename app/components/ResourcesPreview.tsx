@@ -59,7 +59,7 @@ export default function ResourcesPreview() {
               Deep dives, how-tos, and case studies hand-crafted by our team.
             </p>
           </div>
-          <Link href='/blog' className='text-sm text-white/80 hover:underline'>
+          <Link href='/blogs' className='text-sm text-white/80 hover:underline'>
             View all
           </Link>
         </div>
@@ -79,7 +79,7 @@ export default function ResourcesPreview() {
             >
               <div className='h-44 w-full relative rounded-lg overflow-hidden bg-gradient-to-br from-[rgba(179,45,255,0.03)] to-transparent'>
                 <Image
-                  src={"/placeholder.svg"}
+                  src={r.image}
                   alt={r.title}
                   fill
                   className='object-cover opacity-95'

@@ -32,7 +32,7 @@ const item = {
 export default function Hero() {
   const shouldReduce = useReducedMotion();
   return (
-    <section className='w-full max-w-6xl mx-auto px-4 sm:px-6 my-24 md:my-32'>
+    <section className='w-full max-w-6xl mx-auto px-4 sm:px-6 '>
       <motion.div
         variants={container}
         initial='hidden'
@@ -95,9 +95,9 @@ export default function Hero() {
               </Link>
             </div>
             <h1 className='text-3xl sm:text-5xl lg:text-6xl font-extrabold leading-tight text-white'>
-              GeekStechServices
+              Seamless IoT Management
               <span className='ml-2 bg-gradient-to-r from-[#b32dff] via-fuchsia-400 to-[#b32dff] bg-clip-text text-transparent'>
-                AI-powered IoT Network Health
+                for Instant Network Insights
               </span>
             </h1>
             <p className='mt-4 text-lg sm:text-xl text-gray-200 max-w-2xl'>

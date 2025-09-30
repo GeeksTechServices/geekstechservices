@@ -1,4 +1,5 @@
 import Image from "next/image";
+import team from "@/lib/team.json";
 
 export const metadata = {
   title: "About — GeeksTechServices",
@@ -230,17 +231,17 @@ export default function AboutPage() {
         <div className='grid gap-8 md:grid-cols-3'>
           {[
             {
-              img: "/next.svg",
+              img: "/images/about_1.webp",
               title: "Adaptive Sensor Networks",
               body: "Low-power mesh devices with dynamic duty cycling & secure OTA scheduling.",
             },
             {
-              img: "/vercel.svg",
+              img: "/images/about_2.webp",
               title: "Industrial Telemetry Fusion",
               body: "Correlated vibration, thermal & throughput metrics feeding anomaly layers.",
             },
             {
-              img: "/window.svg",
+              img: "/images/about_3.webp",
               title: "Edge Orchestrated Inference",
               body: "Latency-sensitive models deployed at the perimeter with policy gating.",
             },
@@ -254,7 +255,7 @@ export default function AboutPage() {
                   src={c.img}
                   alt={c.title}
                   fill
-                  className='object-contain p-8 opacity-70 grayscale transition group-hover:opacity-100 group-hover:grayscale-0'
+                  className='object-cover opacity-80 grayscale transition group-hover:opacity-100 group-hover:grayscale-0'
                 />
               </div>
               <div className='flex flex-1 flex-col p-6'>
@@ -326,37 +327,27 @@ export default function AboutPage() {
               combining deep protocol knowledge with production ML competency.
             </p>
             <div className='mt-10 grid gap-6 sm:grid-cols-2'>
-              {["Alice Chen", "Ravi Patel", "Maya Singh", "Luis Ortega"].map(
-                (name) => (
-                  <div
-                    key={name}
-                    className='flex items-center gap-4 rounded-lg border border-white/10 bg-white/[0.04] p-4'
-                  >
-                    <div className='relative h-14 w-14 overflow-hidden rounded-full border border-white/10 bg-white/[0.06]'>
-                      <Image
-                        src='/file.svg'
-                        alt={name}
-                        fill
-                        className='object-contain p-2 opacity-80'
-                      />
-                    </div>
-                    <div>
-                      <div className='text-sm font-semibold leading-tight'>
-                        {name}
-                      </div>
-                      <div className='text-xs text-gray-400'>
-                        {name === "Alice Chen"
-                          ? "Lead Embedded"
-                          : name === "Ravi Patel"
-                          ? "Data Science"
-                          : name === "Maya Singh"
-                          ? "Edge AI"
-                          : "Platform Ops"}
-                      </div>
-                    </div>
+              {team.map((member) => (
+                <div
+                  key={member.name}
+                  className='flex items-center gap-4 rounded-lg border border-white/10 bg-white/[0.04] p-4'
+                >
+                  <div className='relative h-14 w-14 overflow-hidden rounded-full border border-white/10 bg-white/[0.06]'>
+                    <Image
+                      src={member.avatar}
+                      alt={member.name}
+                      fill
+                      className='object-cover opacity-80'
+                    />
                   </div>
-                )
-              )}
+                  <div>
+                    <div className='text-sm font-semibold leading-tight'>
+                      {member.name}
+                    </div>
+                    <div className='text-xs text-gray-400'>{member.role}</div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

@@ -49,7 +49,7 @@ export default function CTA() {
                     strokeLinejoin='round'
                   />
                 </svg>
-                <span>Zero config onboarding — connect devices in minutes</span>
+                <span>Zero config onboarding connect devices in minutes</span>
               </li>
 
               <li className='flex items-start gap-3'>

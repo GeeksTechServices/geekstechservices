@@ -3,6 +3,8 @@ import contactData from "@/lib/contact.json";
 // import Turnstile from "@/app/(landing)/contact/Turnstile.client";
 import ContactForm from "./ContactForm.client";
 import { Button } from "@/components/ui/button";
+import team from "@/lib/team.json";
+import Image from "next/image";
 
 export const metadata = {
   title: "Contact — GeekStechServices",
@@ -102,27 +104,9 @@ export default function ContactPage() {
         {/* Optional team or FAQ section - quick suggestions */}
         <div className='mt-20'>
           <h3 className='text-2xl font-bold mb-6'>Meet the team</h3>
-<<<<<<< Updated upstream
-          <div className='grid grid-cols-1 sm:grid-cols-3 gap-6 place-items-center'>
-            <div className='p-4 bg-white/5 rounded-lg'>
-              <div className='h-24 w-24 rounded-full bg-gray-700 mb-4' />
-              <div className='font-medium'>Alex Morgan</div>
-              <div className='text-sm text-gray-400'>Founder</div>
-            </div>
-            <div className='p-4 bg-white/5 rounded-lg'>
-              <div className='h-24 w-24 rounded-full bg-gray-700 mb-4' />
-              <div className='font-medium'>Priya Patel</div>
-              <div className='text-sm text-gray-400'>Head of Ops</div>
-            </div>
-            <div className='p-4 bg-white/5 rounded-lg'>
-              <div className='h-24 w-24 rounded-full bg-gray-700 mb-4' />
-              <div className='font-medium'>Lee Chang</div>
-              <div className='text-sm text-gray-400'>Engineer</div>
-            </div>
-=======
           <div className='grid grid-cols-1 sm:grid-cols-4 gap-6 place-items-center'>
             {team.map((member, idx) => (
-              <div key={idx} className='p-4 rounded-lg'>
+              <div key={idx} className='p-4 bg-white/5 rounded-lg'>
                 <div className='h-24 w-24 rounded-full bg-gray-700 mb-4'>
                   <Image
                     src={member.avatar}
@@ -136,7 +120,6 @@ export default function ContactPage() {
                 <div className='text-sm text-gray-400'>{member.role}</div>
               </div>
             ))}
->>>>>>> Stashed changes
           </div>
         </div>
       </div>

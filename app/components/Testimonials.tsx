@@ -144,7 +144,7 @@ export default function Testimonials() {
         <div className='order-2 md:order-1 flex items-center justify-center'>
           <div className='w-full max-w-lg rounded-xl overflow-hidden shadow-lg glass-faint'>
             <Image
-              src='/placeholder.svg'
+              src='/images/testimonial.webp'
               alt='Customers using product'
               width={720}
               height={540}

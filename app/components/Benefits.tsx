@@ -38,7 +38,7 @@ export default function Benefits() {
       <div className='mb-8 text-center'>
         <h2 className='text-2xl sm:text-3xl font-semibold'>Key Benefits</h2>
         <p className='mt-2 text-gray-300 max-w-2xl mx-auto'>
-          Enterprise-grade monitoring with AI-driven insights.
+          Your Benefits for Optimized Network Performance
         </p>
       </div>
 

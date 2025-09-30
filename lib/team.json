@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Elena Morales",
+    "role": "Lead Embedded",
+    "avatar": "/images/team_f1.webp"
+  },
+  {
+    "name": "Shehan Fernando",
+    "role": "Data Science",
+    "avatar": "/images/team_m2.webp"
+  },
+  {
+    "name": "Sophia Bennett",
+    "role": "Edge AI",
+    "avatar": "/images/team_f2.webp"
+  },
+  {
+    "name": "Wei Zhang",
+    "role": "Platform Ops",
+    "avatar": "/images/team_m1.webp"
+  }
+]

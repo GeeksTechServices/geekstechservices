@@ -8,6 +8,7 @@ import { IconType } from "react-icons";
 import * as RiIcons from "react-icons/ri";
 import * as FaIcons from "react-icons/fa";
 import { Input } from "@/components/ui/input";
+import { RiTwitterXFill } from "react-icons/ri";
 
 type FooterColumn = {
   title: string;
