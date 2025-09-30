@@ -9,7 +9,51 @@ import { Separator } from "@/components/ui/separator";
 import pricingData from "@/lib/pricing.json";
 import Link from "next/link";
 
-function persistSelectedPlan(plan: string, billing: string) {
+// Simple AES-GCM encryption helpers for browser
+const ENCRYPTION_KEY_PASSPHRASE =
+  "/ijrs9Q7Wtprws8475521fJO+wpuLdjZIR0ymdNdf70="; // Change in production!
+
+async function getKey() {
+  const enc = new TextEncoder();
+  // Web Crypto: generate a key from passphrase using PBKDF2
+  const keyMaterial = await window.crypto.subtle.importKey(
+    "raw",
+    enc.encode(ENCRYPTION_KEY_PASSPHRASE),
+    { name: "PBKDF2" },
+    false,
+    ["deriveKey"]
+  );
+  return window.crypto.subtle.deriveKey(
+    {
+      name: "PBKDF2",
+      salt: enc.encode("selected_plan_salt"),
+      iterations: 100000,
+      hash: "SHA-256",
+    },
+    keyMaterial,
+    { name: "AES-GCM", length: 256 },
+    false,
+    ["encrypt", "decrypt"]
+  );
+}
+
+async function encryptData(str: string): Promise<string> {
+  const iv = window.crypto.getRandomValues(new Uint8Array(12));
+  const key = await getKey();
+  const encoded = new TextEncoder().encode(str);
+  const ciphertext = await window.crypto.subtle.encrypt(
+    { name: "AES-GCM", iv },
+    key,
+    encoded
+  );
+  // Concatenate iv + ciphertext and encode in base64
+  const buff = new Uint8Array(iv.length + ciphertext.byteLength);
+  buff.set(iv, 0);
+  buff.set(new Uint8Array(ciphertext), iv.length);
+  return btoa(String.fromCharCode(...buff));
+}
+
+async function persistSelectedPlan(plan: string, billing: string) {
   try {
     const hasConsent =
       typeof document !== "undefined" &&
@@ -17,25 +61,26 @@ function persistSelectedPlan(plan: string, billing: string) {
         .split(";")
         .some((c) => c.trim().startsWith("cookie_consent="));
     const payload = { plan, billing, savedAt: Date.now() };
+    const encrypted = await encryptData(JSON.stringify(payload));
     if (hasConsent) {
       const expires = new Date(Date.now() + 365 * 864e5).toUTCString();
       document.cookie =
         "selected_plan=" +
-        encodeURIComponent(JSON.stringify(payload)) +
+        encodeURIComponent(encrypted) +
         "; expires=" +
         expires +
         "; path=/; Secure; SameSite=Lax";
     } else {
-      localStorage.setItem("selected_plan", JSON.stringify(payload));
+      localStorage.setItem("selected_plan", encrypted);
     }
   } catch {
     try {
+      const payload = { plan, billing, savedAt: Date.now() };
+      const encrypted = await encryptData(JSON.stringify(payload));
       const expires = new Date(Date.now() + 365 * 864e5).toUTCString();
       document.cookie =
         "selected_plan=" +
-        encodeURIComponent(
-          JSON.stringify({ plan, billing, savedAt: Date.now() })
-        ) +
+        encodeURIComponent(encrypted) +
         "; expires=" +
         expires +
         "; path=/; Secure; SameSite=Lax";
