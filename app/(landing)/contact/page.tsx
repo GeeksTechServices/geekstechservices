@@ -102,6 +102,7 @@ export default function ContactPage() {
         {/* Optional team or FAQ section - quick suggestions */}
         <div className='mt-20'>
           <h3 className='text-2xl font-bold mb-6'>Meet the team</h3>
+<<<<<<< Updated upstream
           <div className='grid grid-cols-1 sm:grid-cols-3 gap-6 place-items-center'>
             <div className='p-4 bg-white/5 rounded-lg'>
               <div className='h-24 w-24 rounded-full bg-gray-700 mb-4' />
@@ -118,6 +119,24 @@ export default function ContactPage() {
               <div className='font-medium'>Lee Chang</div>
               <div className='text-sm text-gray-400'>Engineer</div>
             </div>
+=======
+          <div className='grid grid-cols-1 sm:grid-cols-4 gap-6 place-items-center'>
+            {team.map((member, idx) => (
+              <div key={idx} className='p-4 rounded-lg'>
+                <div className='h-24 w-24 rounded-full bg-gray-700 mb-4'>
+                  <Image
+                    src={member.avatar}
+                    alt={member.name}
+                    width={96}
+                    height={96}
+                    className='object-cover rounded-full'
+                  />
+                </div>
+                <div className='font-medium'>{member.name}</div>
+                <div className='text-sm text-gray-400'>{member.role}</div>
+              </div>
+            ))}
+>>>>>>> Stashed changes
           </div>
         </div>
       </div>
