@@ -10,7 +10,8 @@ import pricingData from "@/lib/pricing.json";
 import Link from "next/link";
 
 // Simple AES-GCM encryption helpers for browser
-const ENCRYPTION_KEY_PASSPHRASE = 'static-passphrase-please-change'; // Change in production!
+const ENCRYPTION_KEY_PASSPHRASE =
+  "/ijrs9Q7Wtprws8475521fJO+wpuLdjZIR0ymdNdf70="; // Change in production!
 
 async function getKey() {
   const enc = new TextEncoder();
@@ -27,7 +28,7 @@ async function getKey() {
       name: "PBKDF2",
       salt: enc.encode("selected_plan_salt"),
       iterations: 100000,
-      hash: "SHA-256"
+      hash: "SHA-256",
     },
     keyMaterial,
     { name: "AES-GCM", length: 256 },
@@ -41,7 +42,7 @@ async function encryptData(str: string): Promise<string> {
   const key = await getKey();
   const encoded = new TextEncoder().encode(str);
   const ciphertext = await window.crypto.subtle.encrypt(
-    {name: "AES-GCM", iv},
+    { name: "AES-GCM", iv },
     key,
     encoded
   );
