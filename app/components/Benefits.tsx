@@ -26,7 +26,7 @@ export default function Benefits() {
       id='benefits'
     >
       {/* real placeholder image from public/ */}
-      <div className='hidden lg:block absolute left-0 top-8 -z-10 pointer-events-none'>
+      {/* <div className='hidden lg:block absolute left-0 top-8 -z-10 pointer-events-none'>
         <Image
           src='/window.svg'
           alt='section decor'
@@ -34,7 +34,7 @@ export default function Benefits() {
           height={420}
           className='opacity-10'
         />
-      </div>
+      </div> */}
       <div className='mb-8 text-center'>
         <h2 className='text-2xl sm:text-3xl font-semibold'>Key Benefits</h2>
         <p className='mt-2 text-gray-300 max-w-2xl mx-auto'>

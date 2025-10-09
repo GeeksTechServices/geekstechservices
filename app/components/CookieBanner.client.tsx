@@ -98,7 +98,7 @@ export default function CookieBanner() {
               <div className='backdrop-blur-md bg-white/4 border border-white/6 rounded-xl p-4 md:p-5 flex flex-col md:flex-row items-center gap-3 md:gap-6 shadow-lg'>
                 <div className='flex-1 text-sm'>
                   <div className='flex items-center gap-3'>
-                    <span className='inline-flex items-center justify-center rounded-full bg-[rgba(179,45,255,0.14)] text-[var(--accent)] w-9 h-9 font-semibold'>
+                    <span className='inline-flex items-center justify-center rounded-full bg-[rgba(179,45,255,0.14)] text-[var(--accent)] w-16 h-9 font-semibold'>
                       🍪
                     </span>
                     <div>
@@ -150,7 +150,7 @@ export default function CookieBanner() {
                 </div>
               </div>
 
-              <div className='mt-2 text-xs text-gray-400 text-center md:text-right'>
+              <div className='backdrop-blur-md bg-white/4 border border-white/6 rounded-xl p-1 md:p-2 w-fit text-right float-right mt-2 text-xs'>
                 <a href='/privacy' className='underline underline-offset-2'>
                   Privacy policy
                 </a>

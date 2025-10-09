@@ -178,7 +178,7 @@ export default function Footer() {
                       href={s.href}
                       target='_blank'
                       rel='noopener noreferrer'
-                      className='inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/5 text-[var(--accent)] hover:bg-[var(--accent)] hover:text-black transition-all duration-300'
+                      className='inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/5 text-[var(--accent)] fill-[var(--accent)] hover:fill-black hover:bg-[var(--accent)] hover:text-black transition-all duration-300'
                       style={{ transitionDelay: delay }}
                       aria-label={s.name}
                     >

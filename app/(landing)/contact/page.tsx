@@ -5,6 +5,8 @@ import ContactForm from "./ContactForm.client";
 import { Button } from "@/components/ui/button";
 import team from "@/lib/team.json";
 import Image from "next/image";
+import { phone } from "@/lib/contact.json";
+import Link from "next/link";
 
 export const metadata = {
   title: "Contact — GeekStechServices",
@@ -95,7 +97,13 @@ export default function ContactPage() {
                 in the right direction.
               </p>
               <div className='mt-4'>
-                <Button variant='outline'>Book a call</Button>
+                <Link
+                  href={`tel:${phone}`}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
+                  <Button variant='outline'>Book a call</Button>
+                </Link>
               </div>
             </div>
           </div>
@@ -106,7 +114,7 @@ export default function ContactPage() {
           <h3 className='text-2xl font-bold mb-6'>Meet the team</h3>
           <div className='grid grid-cols-1 sm:grid-cols-4 gap-6 place-items-center'>
             {team.map((member, idx) => (
-              <div key={idx} className='p-4 bg-white/5 rounded-lg'>
+              <div key={idx} className='p-4 rounded-lg'>
                 <div className='h-24 w-24 rounded-full bg-gray-700 mb-4'>
                   <Image
                     src={member.avatar}

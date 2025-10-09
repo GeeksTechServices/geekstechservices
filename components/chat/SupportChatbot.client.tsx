@@ -126,7 +126,7 @@ export default function SupportChatbot() {
         aria-label='Open support chat'
         onClick={() => setOpen(true)}
         className={cn(
-          "fixed bottom-5 right-5 z-50 rounded-full p-4",
+          "fixed bottom-5 right-5 z-40 rounded-full p-4",
           "bg-[#b32dff] text-white shadow-lg shadow-[#b32dff]/30",
           "hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
         )}

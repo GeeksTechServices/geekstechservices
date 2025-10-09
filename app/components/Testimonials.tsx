@@ -129,7 +129,7 @@ export default function Testimonials() {
   };
 
   return (
-    <section className='w-full max-w-6xl mx-auto px-4 sm:px-6 my-24'>
+    <section className='w-full max-w-6xl mx-auto px-4 sm:px-6 my-24 overflow-hidden'>
       <div className='mb-8 text-center'>
         <h3 className='text-xl sm:text-2xl font-semibold'>
           What customers say
